@@ -1,0 +1,43 @@
+﻿<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap js-check-wrap" >
+    <ul class="nav nav-tabs" >
+        <li ><a href="{:U('Game/index')}" >游戏列表</a ></li >
+        <li class="active" ><a href="#" >添加回调</a ></li >
+    </ul >
+    <div class="common-form" >
+        <form method="post" class="form-horizontal js-ajax-form" action="{:U('Game/addurl_post')}" >
+            <fieldset >
+                <div class="control-group" >
+                    <label class="control-label" >游戏:</label >
+                    <div class="controls" >
+                        <label class="control-label" style="text-align:left" >{$games.name}</label >
+                    </div >
+                </div >
+
+                <input id="appid" name="appid" type="hidden" value="{$games.id}" >
+
+                <div class="control-group" >
+                    <label class="control-label" >回调地址:</label >
+                    <div class="controls" >
+                        <textarea name="cpurl" rows="3" cols="60" style="resize:none;width:40%;"
+                                  placeholder="请输入回调地址" >{$games.cpurl}</textarea >
+                    </div >
+
+                </div >
+
+            </fieldset >
+            <div class="form-actions" >
+                <button type="submit"
+                        class="btn btn-primary btn_submit js-ajax-submit" >添加
+                </button >
+                <a class="btn" href="{:U('Sdk/Game/index')}" >返回</a >
+            </div >
+        </form >
+    </div >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+
+</body >
+</html>

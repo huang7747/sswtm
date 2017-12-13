@@ -1,0 +1,451 @@
+<admintpl file="header" />
+<style type="text/css" >
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style >
+
+<script type="text/html" id="photos-item-wrapper" >
+    <li id="savedimage{id}" >
+        <input id="photo-{id}" type="hidden" name="photos_url[]" value="{filepath}" >
+        <input id="photo-{id}-name" type="text" name="photos_alt[]" value="{name}" style="width: 160px;" title="图片名称" >
+        <img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;"
+             onclick="javascript:image_priview(this.src)" />
+        <a href="javascript:upload_one_image('图片上传','#photo-{id}');" >替换</a >
+        <a href="javascript:(function(){$('#savedimage{id}').remove();})();" >移除</a >
+    </li >
+</script >
+
+</head>
+<body >
+<div class="wrap js-check-wrap" >
+    <form action="{:U('Core/Game/edit_post')}" method="post"
+          class="form-horizontal js-ajax-forms" enctype="multipart/form-data" >
+        <div class="row-fluid" >
+            <div class="span9" >
+                <table class="table table-bordered" >
+                    <tr >
+                        <th >游戏名称</th >
+                        <td ><span class="form-required" >{$game.name}</span ></td >
+                        <input type="hidden" name="appid" id="appid" value="{$game.id}" >
+                    </tr >
+                    <tr >
+                        <th width="80" >游戏类型</th >
+                        <td >
+                            <foreach name="gameparenttypes" key="k" item="v" >
+                                <label class="checkbox inline" >
+                                    <php >$type_id_checked=in_array($k,$type_ids)?"checked":"";</php >
+                                    <input value="{$k}" type="checkbox" name="pgtype[]" {$type_id_checked} >{$v}
+                                </label >
+                            </foreach >
+                        </td >
+                    </tr >
+                    <tr >
+                        <th width="80" >游戏标签</th >
+                        <td id="typetd">
+                            <foreach name="gametypes" key="k" item="v" >
+                                <label class="checkbox inline" >
+                                    <php >$type_id_checked=in_array($k,$type_ids)?"checked":"";</php >
+                                    <input value="{$k}" type="checkbox" name="gtype[]" {$type_id_checked} >{$v}
+                                </label >
+                            </foreach >
+                        </td >
+                    </tr >
+                    <tr >
+                        <th >游戏宣传语</th >
+                        <td ><textarea name="oneword" id="oneword" style="width: 60%; height: 50px;"
+                                       placeholder="请输入游戏宣传语" >{$gameinfo.publicity}</textarea >
+                            *70字以内
+                        </td >
+                    </tr >
+                    <tr >
+                        <th >游戏简介</th >
+                        <td ><textarea name="description" id="description" style="width: 98%; height: 50px;"
+                                       placeholder="请填写游戏简介" >{$gameinfo.description}</textarea >
+                        </td >
+                    </tr >
+                    <eq name="has_and" value="1" >
+                        <tr >
+                            <th >安卓下载地址</th >
+                            <td ><textarea name="androidurl" id="androidurl" style="width: 98%; height: 50px;"
+                                           placeholder="请填写下载地址" >{$gameinfo.androidurl}</textarea >
+                            </td >
+                        </tr >
+                        <tr >
+                            <th >安卓适用系统</th >
+                            <td ><input type="text" name="adxt" id="adxt" value="{$gameinfo.adxt}" style="width: 400px"
+                                        placeholder="请填写安卓适用环境" >*最低适用版本, 例如 4.0以上
+                            </td >
+                        </tr >
+                    </eq >
+                    <eq name="has_ios" value="1" >
+                        <tr >
+                            <th >IOS适用系统</th >
+                            <td ><input type="text" name="adxt" id="adxt" value="{$gameinfo.adxt}" style="width: 400px"
+                                        placeholder="请填写IOS适用环境" >*最低适用版本  例如 7.0以上
+                            </td >
+                        </tr >
+                    </eq >
+                    <tr >
+                        <th >游戏大小</th >
+                        <td ><input type="text" name="size" id="size" value="{$gameinfo.size}" style="width: 400px"
+                                    placeholder="请输入游戏版本" >*例如: 100M
+                        </td >
+                    </tr >
+                    <tr >
+                        <th >游戏版本</th >
+                        <input type="hidden" name="verid" value="{$verdata.id}" >
+                        <td ><input type="text" name="version" id="version"
+                                    onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+                                    onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')"
+                                    value="{$verdata.version}" style="width: 400px"
+                                    placeholder="请输入游戏版本" >*数字与小数点组合 例如 1.0
+                        </td >
+                    </tr >
+
+                    <tr >
+                        <th >游戏评分</th >
+                        <td ><input type="text" name="score" id="score" value="{$gameinfo.score}" style="width: 400px"
+                                    placeholder="请输入游戏评分" >*例如: 9.4
+                        </td >
+                    </tr >
+
+                    <tr >
+                        <th >游戏语言</th >
+                        <td ><input type="text" name="lang" id="lang"
+                                    value="{$gameinfo.lang}" style="width: 400px"
+                                    placeholder="请输入游戏语言" >*默认为中文
+                        </td >
+                    </tr >
+                    <tr >
+                        <th >游戏测试状态</th >
+                        <td ><input type="text" name="teststatus" id="teststatus"
+                                    value="{$game.teststatus}" style="width: 400px"
+                                    placeholder="请输入游戏上线测试状态" >*例如: 11月2日游戏上线/公测中
+                        </td >
+                    </tr >
+                    <tr >
+                        <th >更新信息</th >
+                        <td ><input type="text" name="upinfo" id="upinfo"
+                                    value="{$gameinfo.upinfo}" style="width: 400px"
+                                    placeholder="更新信息" >*70文字内 例如: 同步更新
+                        </td >
+                    </tr >
+                    <tr >
+                        <th >游戏截图 (640*960 )</th >
+                        <td >
+                            <fieldset >
+                                <ul id="photos" class="pic-list unstyled" >
+                                <php > $limit = 5;</php >
+                                <notempty name="gameinfo['image']" >
+                                    <php > $smeta = json_decode($gameinfo['image'],true);</php >
+                                    <foreach name="smeta" item="vo" >
+                                        <php >$img_url=sp_get_asset_upload_path($vo['url']);</php >
+                                        <li id="savedimage{$key}" >
+                                            <input id="photo-{$key}" type="hidden" name="photos_url[]"
+                                                   value="{$img_url}" >
+                                            <input id="photo-{$key}-name" type="text" name="photos_alt[]"
+
+                                                   value="{$vo.alt}" style="width: 200px;" title="图片名称" >
+                                            <img id="photo-{$key}-preview" src="{$img_url}"
+                                                 style="height:36px;width: 36px;"
+                                                 onclick="javascript:image_priview(this.src)" />
+                                            <a href="javascript:upload_one_image('图片上传','#photo-{$key}');" >替换</a >
+                                            <a href="javascript:(function(){ $('#savedimage{$key}').remove();})();" >移除</a >
+                                        </li >
+                                    </foreach >
+                                </notempty >
+                            </ul >
+                            <a href="javascript:upload_multi_image('图片上传','#photos','photos-item-wrapper',{'limit':<php>echo $limit;</php>});"
+                               class="btn btn-small" >选择图片</a >
+                        </td >
+                    </tr >
+					<!-- <tr >
+                        <th >背景图 (<if condition="$game['classify'] eq 4"> 720*680 <else/>640*3300</if>)</th >
+                        <td >
+                            <fieldset>
+                                <input type="hidden" name="bgthumb" id="bgthumb" value="{$gameinfo['bgthumb']|default=''}" >
+                                <a href="javascript:upload_one_image('图片上传','#bgthumb');" >
+                                    <if condition="empty($gameinfo['bgthumb'])" >
+                                        <img src="__PUBLIC__/assets/images/default-thumbnail.png" id="bgthumb-preview"
+                                             width="135" style="cursor: hand" />
+                                        <else />
+                                        <img src="{$gameinfo['bgthumb']}" id="bgthumb-preview"
+                                             width="135" style="cursor: hand" />
+                                    </if >
+                                </a >
+                                <input type="button" class="btn btn-small"
+                                       onclick="$('#bgthumb-preview').attr('src','__PUBLIC__/assets/images/default-thumbnail.png');$('#bgthumb').val('');return false;"
+                                       value="取消图片" >
+                        </td >
+                    </tr >-->
+                </table >
+            </div >
+            <div class="span3" >
+                <table class="table table-bordered" >
+                    <tr >
+                        <td ><b >游戏ICON(72*72)</b ></td >
+                    </tr >
+                    <tr >
+                        <td >
+                            <div style="text-align: center;" >
+                                <php >$logourl = empty($gameinfo[mobile_icon])?$gameinfo[icon]:$gameinfo[mobile_icon];</php >
+                                <input type="hidden" name="thumb" id="thumb" value="{$logourl|default=''}" >
+                                <a href="javascript:upload_one_image('图片上传','#thumb');" >
+                                    <if condition="empty($logourl)" >
+                                        <img src="__PUBLIC__/assets/images/default-thumbnail.png" id="thumb-preview"
+                                             width="135" style="cursor: hand" />
+                                        <else />
+                                        <img src="{$logourl}" id="thumb-preview"
+                                             width="135" style="cursor: hand" />
+                                    </if >
+                                </a >
+                                <input type="button" class="btn btn-small"
+                                       onclick="$('#thumb-preview').attr('src','__PUBLIC__/assets/images/default-thumbnail.png');$('#thumb').val('');return false;"
+                                       value="取消图片" >
+                            </div >
+                        </td >
+                    </tr >
+                    <!--<tr >-->
+                        <!--<td ><b >游戏网页大图(166*189)</b ></td >-->
+                    <!--</tr >-->
+                    <!--<tr >-->
+                        <!--<td >-->
+                            <!--<div style="text-align: center;" >-->
+                                <!--<php >$logourl = empty($gameinfo[mobile_icon])?$game[icon]:$gameinfo[mobile_icon];</php >-->
+                                <!--<input type="hidden" name="bigimage" id="bigimage"-->
+                                       <!--value="{:sp_get_asset_upload_path($gameinfo[bigimage])}" >-->
+                                <!--<a href="javascript:upload_one_image('图片上传','#bigimage');" >-->
+                                    <!--<if condition="empty($gameinfo['bigimage'])" >-->
+                                        <!--<img src="__PUBLIC__/assets/images/default-thumbnail.png"-->
+                                             <!--id="bigimage-preview"-->
+                                             <!--width="135" style="cursor: hand" />-->
+                                        <!--<else />-->
+                                        <!--<img src="{:sp_get_asset_upload_path($gameinfo['bigimage'])}"-->
+                                             <!--id="bigimage-preview"-->
+                                             <!--width="135" style="cursor: hand" />-->
+                                    <!--</if >-->
+                                <!--</a >-->
+                                <!--<input type="button" class="btn btn-small"-->
+                                       <!--onclick="$('#bigimage-preview').attr('src','__PUBLIC__/assets/images/default-thumbnail.png');$('#bigimage').val('');return false;"-->
+                                       <!--value="取消图片" >-->
+                            <!--</div >-->
+
+                        <!--</td >-->
+                    <!--</tr >-->
+                    <tr >
+                        <th ><b >下载次数</b ></th >
+                    </tr >
+                    <tr >
+                        <td ><input type="text" name="count"
+                                    onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"
+                                    onafterpaste="this.value=this.value.replace(/[^0-9]/g,'')"
+                                    value="{$extdata.down_cnt|default=0}" style="width: 160px;" ></td >
+                    </tr >
+                    <php > $single_yes=$game['category']==1?"checked":"";
+                           $single_no=$game['category']==2?"checked":"";
+                           $class_android=$game['classify']==1?"checked":"";
+                           $class_other=$game['classify']==4?"checked":"";
+                           $hot_yes=$game['is_hot']==2?"checked":"";
+                           $hot_no=$game['is_hot']==1?"checked":"";
+                    </php >
+                    <tr >
+                        <td >
+                            <label class="radio" > <input type="radio" name="gcategory" value="1" {$single_yes} >单机
+                            </label >
+                            <label class="radio" > <input type="radio" name="gcategory" value="2" {$single_no} >网游
+                            </label >
+                        </td >
+                    </tr >
+                    <tr >
+                        <td >
+                            <label class="radio" > <input type="radio" name="hot" value="1" {$hot_yes} >热门
+                            </label >
+                            <label class="radio" > <input type="radio" name="hot" value="0" {$hot_no} >普通
+                            </label >
+                        </td >
+                    </tr >
+                </table >
+            </div >
+        </div >
+        <div class="form-actions" >
+            <button class="btn btn-primary js-ajax-submit" type="submit" >提交</button >
+            <a class="btn" href="javascript:history.back(-1);" >返回</a >
+        </div >
+    </form >
+</div >
+
+<script type="text/javascript" src="__PUBLIC__/js/common.js" ></script >
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js?t={:time()}" ></script >
+<script type="text/javascript" >
+    //编辑器路径定义
+    var editorURL = GV.DIMAUB;
+</script >
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js" ></script >
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js" ></script >
+<script type="text/javascript" >
+    $(function () {
+
+        $("input[name='pgtype[]']").change(function() {
+            var text="";
+            $("input[name='pgtype[]']").each(function() {
+                if ($(this).attr("checked")) {
+                    text += ","+$(this).val();
+                }
+            });
+            var appid = $("#appid").val();
+            $.post("{:U('Sdk/Game/game_label')}",{ids:text,appid:appid},function(result){
+                $("#typetd").empty();
+                $("#typetd").html(result);
+            });
+            //alert($(this).val());
+        });
+
+        //setInterval(function(){public_lock_renewal();}, 10000);
+        $(".js-ajax-close-btn").on('click', function (e) {
+            e.preventDefault();
+            Wind.use("artDialog", function () {
+                art.dialog({
+                    id        : "question",
+                    icon      : "question",
+                    fixed     : true,
+                    lock      : true,
+                    background: "#CCCCCC",
+                    opacity   : 0,
+                    content   : "您确定需要关闭当前页面嘛？",
+                    ok        : function () {
+                        setCookie("refersh_time", 1);
+                        window.close();
+                        return true;
+                    }
+                });
+            });
+        });
+        /////---------------------
+        Wind.use('validate', 'ajaxForm', 'artDialog', function () {
+            //javascript
+            //编辑器
+            editorcontent = new baidu.editor.ui.Editor();
+            editorcontent.render('content');
+            try {
+                editorcontent.sync();
+            } catch (err) {
+            }
+            //增加编辑器验证规则
+            jQuery.validator.addMethod('editorcontent', function () {
+                try {
+                    editorcontent.sync();
+                } catch (err) {
+                }
+                ;
+                return editorcontent.hasContents();
+            });
+
+            var form = $('form.js-ajax-forms');
+            //ie处理placeholder提交问题
+            if ($.browser.msie) {
+                form.find('[placeholder]').each(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                    }
+                });
+            }
+
+            var formloading = false;
+            //表单验证开始
+            form.validate({
+                //是否在获取焦点时验证
+                onfocusout   : false,
+                //是否在敲击键盘时验证
+                onkeyup      : false,
+                //当鼠标掉级时验证
+                onclick      : false,
+                //验证错误
+                showErrors   : function (errorMap, errorArr) {
+                    try {
+                        $(errorArr[0].element).focus();
+                        art.dialog({
+                            id        : 'error',
+                            icon      : 'error',
+                            lock      : true,
+                            fixed     : true,
+                            background: "#CCCCCC",
+                            opacity   : 0,
+                            content   : errorArr[0].message,
+                            cancelVal : '确定',
+                            cancel    : function () {
+                                $(errorArr[0].element).focus();
+                            }
+                        });
+                    } catch (err) {
+                    }
+                },
+                //验证规则
+                rules        : {
+                    'name': {required: 1}
+                },
+                //验证未通过提示消息
+                messages     : {
+                    'name': {required: '请输入游戏名称'}
+                },
+                //给未通过验证的元素加效果,闪烁等
+                highlight    : false,
+                //是否在获取焦点时验证
+                onfocusout   : false,
+                //验证通过，提交表单
+                submitHandler: function (forms) {
+                    if (formloading)  return;
+                    $(forms).ajaxSubmit({
+                        //按钮上是否自定义提交地址(多按钮情况)
+                        url         : form.attr('action'),
+                        dataType    : 'json',
+                        beforeSubmit: function (arr, $form, options) {
+                            formloading = true;
+                        },
+                        success     : function (data, statusText, xhr, $form) {
+                            formloading = false;
+                            if (data.status) {
+                                setCookie("refersh_time", 1);
+                                //添加成功
+                                Wind.use("artDialog", function () {
+                                    art.dialog({
+                                        id        : "succeed",
+                                        icon      : "succeed",
+                                        fixed     : true,
+                                        lock      : true,
+                                        background: "#CCCCCC",
+                                        opacity   : 0,
+                                        content   : data.info,
+                                        button    : [
+                                            {
+                                                name    : '继续编辑?',
+                                                callback: function () {
+                                                    reloadPage(window);
+                                                    return true;
+                                                },
+                                                focus   : true
+                                            },
+                                            {
+                                                name    : '返回游戏列表',
+                                                callback: function () {
+//                                                    location = "{:U('Sdk/Game/index')}";
+                                                    location = document.referrer;
+                                                    return true;
+                                                }
+                                            }]
+                                    });
+                                });
+                            } else {
+                                isalert(data.info);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+        ////-------------------------
+    });
+</script >
+</body >
+</html>

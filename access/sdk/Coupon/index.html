@@ -1,0 +1,202 @@
+﻿<admintpl file="header" />
+<style >
+        .edit_rate_form_div .row {
+            width: 300px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .edit_rate_form_div input {
+            width: 280px;
+        }
+
+        .edit_rate_form_btn {
+            width: 300px;
+        }
+
+        .edit_rate_form_div .row {
+            width: 300px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .edit_rate_form_div input {
+            width: 280px;
+        }
+</style >
+</head>
+<body class="J_scroll_fixed" >
+<php >
+    $status = [
+        '1'=>'待上线',
+        '2'=>'已上线',
+        '3'=>'已下线',
+    ];
+</php >
+<div class="wrap js-check-wrap" >
+    <ul class="nav nav-tabs" >
+        <li class="active" ><a href="{:U('Coupon/index')}" >代金卷列表</a ></li >
+    </ul >
+
+    <form class="well form-search" method="get" action="{:U('Coupon/index')}" >
+        <div class="search_type cc mb10" >
+            <div class="mb10" >
+					<span class="mr20" >
+                        代金卷名称：
+						<input type="text" name="title" style="width: 200px;" value="{$formdata.title}"
+                               placeholder="请输入代金卷名..." >
+
+                        &nbsp &nbsp
+						 代金卷金额：
+						<input type="text" name="money" style="width: 200px;" value="{$formdata.money}"
+                               placeholder="请输入代金卷金额..." >
+
+                        <input type="submit" class="btn btn-primary" value="搜索" />
+					</span >
+            </div >
+        </div >
+    </form >
+    <button class="btn btn-success" onclick="location.href='{:U('Coupon/add')}'" style="margin:10px 0;" >添加代金卷</button >
+
+    <button class="btn btn-warning edit_rate_btn" href="javascript:;"
+            style="margin:10px 0;" >{$max_rate}% (代金卷使用最大比例 ) 点击修改</button >
+    <form class="js-ajax-form" action="" method="post" >
+
+        <table class="table table-hover table-bordered table-list" >
+            <thead >
+            <tr >
+                 <!--<th width="15" ><label >-->
+                 <!--<input type="checkbox" class="js-check-all" data-direction="x"-->
+                 <!--data-checklist="js-check-x" ></label ></th >-->
+
+                <th >代金卷名称</th >
+                <th >代金卷金额</th >
+                <th >兑换所需积分</th >
+                <th >创建时间</th >
+                <th >兑换开始时间</th >
+                <th >兑换结束时间</th >
+                <th >总数量</th >
+                <th >已领取数量</th >
+                <th >已使用数量</th >
+                <th >状态</th >
+                <th >是否推荐</th >
+                <th width="150" >管理操作</th >
+            </tr >
+            </thead >
+
+            <foreach name="coupons" item="vo" >
+                <tr >
+                    <td >{$vo.title}</td >
+                    <td >{$vo.money}</td >
+                    <td >{$vo.condition}</td >
+                    <td >{:date('Y年m月d日 H:i',$vo['create_time'])}</td >
+                     <td >
+                    <eq name="vo.end_time" value="0" >
+                        时间不限
+                        <else />
+                        {:date('Y年m月d日 H:i',$vo['start_time'])}
+                    </eq >
+                         </td >
+                    <td >
+                    <eq name="vo.end_time" value="0" >
+                        时间不限
+                        <else />
+                         {:date('Y年m月d日 H:i',$vo['end_time'])}
+                    </eq >
+                    </td >
+                    <td >{$vo['total_num']}</td >
+                    <td >{$vo['send_num']}</td >
+                    <td >{$vo['use_num']}</td >
+                    <td >{$status[$vo['status']]}</td >
+                    <td >
+                        <eq name="vo[isrcmd]" value="2" >
+                            推荐
+                        </eq >
+
+                    </td >
+                    <td >
+                        <a href="{:U('Coupon/edit',array('id'=>$vo['id']))}" >修改 |</a >
+                        <eq name="vo[isrcmd]" value="2" >
+                            <a href="{:U('Coupon/recommend',array('id'=>$vo['id'],'isrcmd'=>1))}"
+                               class="js-ajax-dialog-btn"
+                               data-msg="确定不推荐该代金卷?" >不推荐 |</a >
+                        <else />
+                            <a href="{:U('Coupon/recommend',array('id'=>$vo['id'],'isrcmd'=>2))}"
+                               class="js-ajax-dialog-btn"
+                               data-msg="确定推荐该代金卷?" >推荐 |</a >
+                        </eq >
+                        <a href="{:U('Coupon/del',array('id'=>$vo['id']))}" class="js-ajax-delete" >删除 |</a >
+                        <if condition="2 == $vo['status']" >
+                             <a href="{:U('Coupon/setStatus',array('id'=>$vo['id'],'status'=>1))}"
+                                class="js-ajax-delete" >下线</a ></td >
+                            <else />
+                        <a href="{:U('Coupon/setStatus',array('id'=>$vo['id'],'status'=>2))}" class="js-ajax-dialog-btn"
+                           data-msg="确定上线该代金卷？" >上线</a >
+
+                    </td >
+                    </if>
+
+                </tr >
+            </foreach >
+        </table >
+        <div class="pagination" >{$Page}</div >
+    </form >
+     <div class="edit_rate_form_div container"
+          style="display:none;width:300px;padding-top:20px;padding-left:10px;padding-right:10px;" >
+        <form id='edit_rate_form' method='post' onsubmit='return false;' >
+
+            <div class="row" >
+                <div class="col-md-12" >可使用最大比例（%） </div >
+                <div class="col-md-12" >
+                    <span >(0<=最大比例 <=100)%</span >
+                </div >
+                <div class="col-md-8" >
+                    <input type="number" name="max_rate" onkeyup="clearNoNum(this,0,100)"
+                           onafterpaste="clearNoNum(this,0,100)" value="{$max_rate}" min="0" max="100" step="1" />
+                </div >
+            </div >
+            <div class="row" >
+                <button class="btn btn-success edit_rate_form_btn" >修改</button >
+            </div >
+        </form >
+    </div >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+<script >
+    $(function () {
+
+        $("#navcid_select").change(function () {
+            $("#mainform").submit();
+        });
+
+    });
+
+    $(".edit_rate_btn").click(function () {
+        layer.open({
+            type   : 1,
+            shift  : 2,
+            area   : ['400px', '250px'],
+            title  : "修改代金卷使用最大比例", //不显示标题
+            content: $('.edit_rate_form_div'), //捕获的元素
+            cancel : function (index) {
+                layer.close(index);
+            }
+        });
+    });
+
+
+    $(".edit_rate_form_btn").click(function () {
+        var url  = "{:U('Sdk/Coupon/edit_rate')}";
+        var data = $("#edit_rate_form").serialize();
+        $.post(url, data, function (data) {
+            yxalert(data.msg);
+
+            if (data.error === '0') {
+                reload_delay();
+            }
+        });
+    });
+
+</script >
+</body >
+</html>

@@ -1,0 +1,53 @@
+﻿<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap js-check-wrap" >
+    <ul class="nav nav-tabs" >
+        <li ><a href="{:U('IosGame/index')}" >游戏列表</a ></li >
+        <li class="active" ><a href="#" >添加母包地址</a ></li >
+    </ul >
+    <div class="common-form" >
+        <form method="post" class="form-horizontal js-ajax-form" action="{:U('IosGame/addpackageurl_post')}" >
+            <fieldset >
+                <div class="control-group" >
+                    <label class="control-label" >游戏ID:</label >
+                    <div class="controls" >
+                        <label class="control-label" style="text-align:left" >{$games.app_id}</label >
+                    </div >
+                </div >
+
+                <div class="control-group" >
+                    <label class="control-label" >地址说明:</label >
+                    <div class="controls" >
+                        <label class="control-label" style="text-align:left; width:800px" >
+                            下载服务器中的 sdkgame/{$initial} 目录上传母包,并改名为 {$initial}.ipa
+                        </label >
+                    </div >
+                </div >
+
+                <input id="id" name="id" type="hidden" value="{$games.id}" >
+                <input id="appid" name="appid" type="hidden" value="{$games.app_id}" >
+
+                <div class="control-group" >
+                    <label class="control-label" >母包地址:</label >
+                    <div class="controls" >
+                        <if condition="empty($games['packageurl'])" >
+                            <label class="control-label"
+                                   style="text-align:left; width:800px" >请上传母包{$initial}.ipa</label >
+                            <else />
+                            <label class="control-label"
+                                   style="text-align:left; width:800px" >{:DOWNIOSSITE}/{$games['packageurl']}</label >
+                        </if >
+                    </div >
+                </div >
+            </fieldset >
+            <div class="form-actions" >
+                <a class="btn" href="{:U('IosGame/index')}" >返回</a >
+            </div >
+        </form >
+    </div >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+
+</body >
+</html>

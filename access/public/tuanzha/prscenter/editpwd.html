@@ -1,0 +1,148 @@
+<div id="myusermopass" class="tab-pane active" title="修改密码" shorttitle="myusermopass" url="?action=myuser&amp;opt=mopass"><div class="col-xs-12">
+
+    <form id="mypass-form" role="form" class="form-horizontal"  novalidate="novalidate">
+        <input type="hidden" name="sub" value="1">
+        <div class="form-group">
+            <label for="form-field-1" class="col-sm-3 control-label no-padding-right">登录账号：</label>
+
+            <div class="col-sm-9">
+                <input type="text" name="user_login" id="form-input-readonly" class="col-xs-10 col-sm-5" readonly="true">
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="form-group">
+            <label for="form-field-2" class="col-sm-3 control-label no-padding-right">原密码：</label>
+
+            <div class="col-sm-9">
+                <input type="password" name="opwd" class="col-xs-10 col-sm-5" placeholder="原密码" id="oldpassword">
+                <span class="help-inline col-xs-12 col-sm-7">
+                    <span class="middle">6-20位</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="form-group">
+            <label for="form-field-2" class="col-sm-3 control-label no-padding-right">新密码：</label>
+
+            <div class="col-sm-9">
+                <input type="password" name="npwd" class="col-xs-10 col-sm-5" placeholder="新密码" id="password">
+                <span class="help-inline col-xs-12 col-sm-7">
+                    <span class="middle">6-20位</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="form-group">
+            <label for="form-field-2" class="col-sm-3 control-label no-padding-right">确认密码：</label>
+
+            <div class="col-sm-9">
+                <input type="password" name="qpwd" class="col-xs-10 col-sm-5" placeholder="确认密码" id="password2">
+                <span class="help-inline col-xs-12 col-sm-7">
+                    <span class="middle">请再次输入密码</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="clearfix form-actions">
+            <div class="col-md-offset-3 col-md-9">
+                <button type="submit" class="btn btn-info" id="btn-pwd">
+                    <i class="icon-ok bigger-110"></i>
+                    提交
+                </button>
+                <button type="reset" class="btn">
+                    <i class="icon-undo bigger-110"></i>
+                    重置
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+    <script>
+        $("input[name='user_login']").val(lsspa.data.admin);
+        $('#mypass-form').validate({
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            rules: {
+                oldpassword: {
+                    required: true,
+                    minlength: 6
+                },
+                password: {
+                    required: true,
+                    minlength: 6
+                },
+                password2: {
+                    required: true,
+                    minlength: 6,
+                    equalTo: "#password"
+                }
+            },
+
+            messages: {
+                oldpassword: {
+                    required: "必须验证原密码.",
+                    minlength: "请至少输入6位字符."
+                },
+                password: {
+                    required: "必须填写新密码.",
+                    minlength: "请至少输入6位字符"
+                },
+                password2: {
+                    required: "必须填写确认密码.",
+                    minlength: "请至少输入6位字符.",
+                    equalTo: "请确保输入的\"确认密码\"与\"新密码\"一致"
+                }
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                $('.alert-danger', $('.login-form')).show();
+            },
+
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            },
+
+            success: function (e) {
+                $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).remove();
+            },
+
+            errorPlacement: function (error, element) {
+                if(element.is(':checkbox') || element.is(':radio')) {
+                    var controls = element.closest('div[class*="col-"]');
+                    if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                }
+                else if(element.is('.select2')) {
+                    error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                }
+                else if(element.is('.chosen-select')) {
+                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                }
+                else error.insertAfter(element.parent());
+            },
+
+            submitHandler: function (form) {
+            },
+            invalidHandler: function (form) {
+            }
+        });
+   $("#btn-pwd").click(function(){
+     window.event.returnValue=false || event.preventDefault();
+       var npwd=$("[name='npwd']").val();
+       var qpwd=$("[name='qpwd']").val();
+       if(npwd!=qpwd) return lsalert('密码不一致!','',2);
+       var data=$("#mypass-form").serialize();
+       lsconfirm("是否确认修改密码?",setpas,data);
+   })
+    </script>
+</div>

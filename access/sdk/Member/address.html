@@ -1,0 +1,33 @@
+<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap js-check-wrap" >
+    <ul class="nav nav-tabs" >
+        <li class="active" ><a href="##" >玩家地址</a ></li >
+    </ul >
+
+    <form class="js-ajax-form" action="" method="post" >
+        <table class="table table-hover table-bordered" >
+            <thead >
+            <tr >
+                <th >收货人</th >
+                <th >联系方式</th >
+                <th >邮政编码</th >
+                <th >地址</th >
+            </tr >
+            </thead >
+            <tbody >
+                <tr >
+                    <td >{$consignee}</td >
+                    <td >{$mobile}</td >
+                    <td >{$zipcode}</td >
+                    <td >{$province}{$city}{$district}{$address}</td >
+                </tr >
+            </foreach >
+            </tbody >
+        </table >
+    </form >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+</body >
+</html>

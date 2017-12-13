@@ -1,0 +1,62 @@
+<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap jj" >
+    <ul class="nav nav-tabs" >
+        <li ><a href="{:U('Cdkey/giftlist')}" >激活码列表</a ></li >
+        <li class="active" ><a href="#" target="_self" >添加激活码</a ></li >
+    </ul >
+    <div class="common-form" >
+        <form method="post" class="form-horizontal js-ajax-form" action="{:U('Cdkey/add_post')}" >
+            <fieldset >
+                <div class="control-group" >
+                    <label class="control-label" >游戏:</label >
+                    <div class="controls" >
+                        <select class="select_2" name="appid" id="selected_id" >
+                            <foreach name="games" key="k" item="vo" >
+                                <option value="{$k}" >{$vo}</option >
+                            </foreach >
+                        </select >
+                    </div >
+                </div >
+
+                <div class="control-group" >
+                    <label class="control-label" >激活码标题:</label >
+                    <div class="controls" >
+                        <input type="text" class="input" name="title" value="" >
+                    </div >
+                </div >
+                <div class="control-group" >
+                    <label class="control-label" >激活码:</label >
+                    <div class="controls" >
+                        <textarea id="code" name="code" rows="12" cols="75" style="resize:none;width:50%;" ></textarea >
+                    </div >
+                </div >
+                <!-- 					<div class="control-group">
+                                        <label class="control-label">激活码内容:</label>
+                                        <div class="controls">
+                                            <textarea class="form-control comment-postbox" name="content" style="height:120px;width: 50%;"></textarea>
+                                        </div>
+                                    </div> -->
+                <div class="control-group" >
+                    <label class="control-label" >兑换期限:</label >
+                    <div class="controls" >
+                        <input type="text" name="starttime" class="js-datetime" value="" style="width: 100px;"
+                               autocomplete="off" >--
+                        <input type="text" class="js-datetime" name="endtime" value="" style="width: 100px;"
+                               autocomplete="off" > &nbsp; &nbsp;
+                    </div >
+                </div >
+            </fieldset >
+            <div class="form-actions" >
+                <button type="submit"
+                        class="btn btn-primary btn_submit js-ajax-submit" >添加
+                </button >
+                <a class="btn" href="{:U('Cdkey/giftlist')}" >返回</a >
+            </div >
+        </form >
+    </div >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+</body >
+</html>

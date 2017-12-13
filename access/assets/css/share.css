@@ -1,0 +1,26 @@
+.funcs{
+    padding:0 0 10px 0;
+}
+.pop_up_form_div {
+    width:300px;
+    padding: 20px 20px 40px 3px ;
+}
+.pop_up_form_div .row{
+    width:300px;
+    margin:0;
+    padding:0;
+}
+ .pop_up_form_div input[type='text'],.pop_up_form_div input[type='password'],pop_up_form_div input[type='email'],pop_up_form_div input[type='date']{
+    width:280px;
+}
+ .pop_up_form_div input[type='select']{
+     width:100px;
+ }
+.pop_up_form_submit_btn{
+    width:300px;
+}
+input[disabled='disabled']{
+    background-color: #fff;
+    border-bottom:1px solid #ccc;
+}
+

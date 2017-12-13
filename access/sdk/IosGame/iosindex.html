@@ -1,0 +1,269 @@
+﻿<admintpl file="header" />
+<style >
+    .select2-container .select2-dropdown {
+        z-index: 99999999;
+    }
+</style >
+
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap js-check-wrap" >
+    <ul class="nav nav-tabs" >
+        <li class="active" ><a href="{:U('Sdk/IosGame/iosindex')}" >游戏列表</a ></li >
+        <li ><a href="{:U('Sdk/IosGame/iosdelindex')}" >删除列表</a ></li >
+    </ul >
+
+    <form class="well form-search" method="get" action="{:U('IosGame/iosindex')}" >
+        <div class="search_type cc mb10" >
+            <div class="mb10" >
+					<span class="mr20" >
+					    <!--状态：
+						<select class="select_2" name="status" id="selected_id" >
+                            <foreach name="gamestatues" key="k" item="vo" >
+                                <php >$g_select=((isset($formget['status'])&&$k==$formget['status']) ?"selected":"");</php >
+                                <option value="{$k}" {$g_select} >{$vo}</option >
+                            </foreach >
+                        </select >-->
+                    &nbsp;&nbsp;
+						游戏名称：
+                        <select class="select_2 js-example-basic-single" name="app_id" id="selected_id" >
+                            <option value="0" >选择游戏</option >
+                            <foreach name="games" key="k" item="vo" >
+                                <php >$g_select=((isset($formget['app_id']) && $k==$formget['app_id']) ?"selected":"");</php >
+                                <option value="{$k}" {$g_select} >{$vo}</option >
+                            </foreach >
+                        </select >
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        是否支付切换：
+                        <select class="select_2 js-example-basic-single" name="switch_type" id="selected_id" >
+                            <foreach name="paySwitchstatus" key="k" item="vo" >
+                                <php >$g_select=((isset($formget['switch_type']) && $k==$formget['switch_type']) ?"selected":"");</php >
+                                <option value="{$k}" {$g_select} >{$vo}</option >
+                            </foreach >
+                        </select >
+                        &nbsp;&nbsp;
+                        <input type="submit" name="submit" class="btn btn-primary" value="搜索" />
+					</span >
+            </div >
+        </div >
+    </form >
+
+    <link rel="stylesheet" href="__PUBLIC__/admin/css/share.css" />
+    <div class='funcs' >
+        <a class='btn btn-success add_game_btn' href="javascript:;" >添加游戏</a >
+    </div >
+
+    <form class="js-ajax-form" action="" method="post" >
+        <table class="table table-hover table-bordered table-list" >
+            <thead >
+            <tr >
+                <th width=50 >游戏ID</th >
+                <th width=150 >游戏名称</th >
+                <th width=150 >cp账号</th >
+                <!--<th width=50 >状态</th >
+                <th width=100 >上线时间</th >-->
+                <th width=50 >是否支付切换</th >
+                <th width=150 >回调地址</th >
+                <!--<th width=150 >母包地址</th >-->
+                <th width=120 >管理操作</th >
+            </tr >
+            </thead >
+            <foreach name="items" item="vo" >
+                <tr >
+                    <td >{$vo.id}</td >
+                    <td >
+                        <notempty name="vo.icon" >
+                            <img src="{:sp_get_asset_upload_path($vo[icon])}" onerror="imgnofind('/public/{$vo[icon]}')"
+                                 width="40" />
+                        </notempty >
+                        {$vo.name}
+                    </td >
+                    <td >
+                        {$vo.cpusers|default="无"}&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class='btn btn-success edit_user_game' href="javascript:;" data-appid="{$vo.id}" >修改</a >
+                    </td >
+                    <!--  <php> if(isset($vo['status'])){</php> <td >
+                       {$gamestatues[$vo['status']]}
+                    </td >
+                    <td >
+                        <if condition="$vo['status'] eq 1 OR $vo['status'] eq 3" >
+                            <a href="{:U('IosGame/set_status',array('id'=>$vo['id'],'status'=>2))}"
+                               class="js-ajax-dialog-btn" data-msg="确定上线游戏？" >上线游戏</a >
+                            <else />
+                            {$vo.run_time|date='Y-m-d H:i:s',###}<br />
+                            <a href="{:U('IosGame/set_status',array('id'=>$vo['id'],'status'=>3))}"
+                               class="js-ajax-dialog-btn" data-msg="确定下线游戏？" >下线游戏</a >
+                        </if >
+                    </td >  <php>} </php> -->
+                    <td >
+                        <if condition="$vo['pay_switch'] eq 1" >
+                            是&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="{:U('IosGame/set_pay_switch',array('id'=>$vo['id'],'status'=>2))}"
+                               class="js-ajax-dialog-btn" data-msg="确定该游戏关闭支付切换吗？" >关闭</a >
+                            <else />
+                            否&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="{:U('IosGame/set_pay_switch',array('id'=>$vo['id'],'status'=>1))}"
+                               class="js-ajax-dialog-btn" data-msg="确定该游戏开启支付切换吗？" >开启</a >
+                        </if >
+                    </td >
+                    <td style="word-wrap:break-word;word-break:break-all;" >
+                        <if condition="empty($vo['cpurl'])" >
+                            暂无回调<br />
+                            <a href="{:U('IosGame/addurl',array('appid'=>$vo['id']))}" >点击添加回调</a >
+                            <else />
+                            {$vo.cpurl}<br />
+                            <a href="{:U('IosGame/editurl',array('appid'=>$vo['id']))}" >点击修改回调</a >
+                        </if >
+                    </td >
+
+                    <!-- <td style="word-wrap:break-word;word-break:break-all; " >
+                        <if condition="empty($vo['packageurl'])" >
+                            暂无母包({$vo['initial']})
+                            <br /><a href="{:U('IosGame/addpackageurl',array('appid'=>$vo['id']))}" >生成母包</a >
+                            <else />
+                            {:DOWNIOSSITE}/{$vo.packageurl}
+                            <a href="javascript:;"
+                               class=" link_copy_btn "
+                               data-clipboard-text="{:DOWNIOSSITE}/{$vo.packageurl}"
+                            >复制</a >
+                            &lt;!&ndash; <a href="{:U('IosGame/editpackageurl',array('appid'=>$vo['id']))}">点击更新母包</a> &ndash;&gt;
+                        </if >
+                    </td > -->
+
+                    <td >
+                        <a href="{:U('IosGame/get_param',array('appid'=>$vo['id']))}" >对接参数 </a >
+                        |
+                        <!--<a href="{:U('Game/GamePayway/edit',array('appid'=>$vo['id']))}" >支付配置 </a >
+                        |
+                        <a href="{:U('Sdk/Game/edit',array('id'=>$vo['id']))}" >编辑 </a >-->
+                        <a href="{:U('Game/GamePayway/edit',array('appid'=>$vo['id']))}" >支付配置 </a >
+                        |
+                        <a href="{:U('Sdk/Game/edit',array('id'=>$vo['id']))}" >编辑 </a >
+
+                        <if condition="$vo['status'] neq 0" >
+                            |
+                            <a href="{:U('IosGame/delGame',array('id'=>$vo['id']))}" class="js-ajax-delete" > 删除</a >
+                        </if >
+                    </td >
+                </tr >
+            </foreach >
+        </table >
+        <div class="pagination" >{$Page}</div >
+
+    </form >
+</div >
+
+<div class="pop_up_form_div container" id='add_game' style="display:none;" >
+    <div class="row" >
+        <div class="col-md-4" >游戏名称</div >
+        <div class="col-md-8" >
+            <input type="text" name="add_game_name" />
+        </div >
+    </div >
+    <div class="row" >
+        <div class="col-md-4" >当前状态</div >
+        <div class="col-md-8" >
+            <span class="label label-info" >接入中</span >
+
+        </div >
+    </div >
+    <div class="row" style="margin-top:20px;" >
+        <button class="btn btn-success pop_up_form_submit_btn" id='agent_submit_btn' >确认</button >
+    </div >
+</div >
+<div class="pop_up_form_div container" id='edit_ug' style="display:none;" >
+    <form id='popup_form' method='post' onsubmit='return false;' >
+        <input type="hidden" id="edit_app_id" >
+        <div class="row" >
+            <div class="col-md-4" >cp账号选择</div >
+            <div class="col-md-8" >
+                <!-- {  $agent_select  } -->
+                <php >if(isset($cps)&&!empty($cps)){ </php >
+                <foreach name="cps" key="k" item="vo" >
+                    <label class="checkbox inline" >
+                        <input value="{$k}" type="checkbox" name="user_id" >{$vo}
+                    </label >
+                </foreach ><php >}</php >
+            </div >
+        </div >
+        <div class="row" >
+            <button class="btn btn-success" id="cp_edit_btn"
+                    style="margin-top:20px;" >确认
+            </button >
+        </div >
+    </form >
+</div >
+<script >
+    $(".add_game_btn").click(function () {
+        layer.open({
+            type   : 1,
+            shift  : 2,
+            area   : '350px',
+            title  : "添加游戏",
+            content: $('#add_game'),
+            cancel : function (index) {
+                layer.close(index);
+            }
+        });
+    });
+
+    $(".pop_up_form_submit_btn").click(function () {
+        var url  = "{:U('Core/Game/add')}";
+        var name = $("input[name='add_game_name']").val();
+        var data = {"name": name, "classify": "401"};
+        $.post(url, data, function (res) {
+            if (res.error == "0") {
+                yxalert(res.msg);
+                reload_delay();
+            } else if (res.error == "1") {
+                yxalert(res.msg);
+            }
+        })
+    });
+
+    $(".edit_user_game").click(function () {
+        var app_id = $(this).attr("data-appid");
+        $("#edit_app_id").val(app_id);
+        layer.open({
+            type   : 1,
+            shift  : 2,
+            area   : '350px',
+            title  : "绑定cp修改",
+            content: $('#edit_ug'),
+            cancel : function (index) {
+                layer.close(index);
+            }
+        });
+    });
+
+    $("#cp_edit_btn").click(function () {
+        var app_id = $("#edit_app_id").val();
+//        var agent_id = $("#edit_ug select").val();
+        var arr    = new Array();
+        var items  = document.getElementsByName("user_id");
+        for (i = 0; i < items.length; i ++) {
+            if (items[i].checked) {
+                arr.push(items[i].value);
+            }
+        }
+        var data = {"app_id": app_id, "agent_id": arr};
+        var url  = "{:U('Sdk/IosGame/changeCp')}";
+        $.post(url, data, function (res) {
+            if (res.error === '0') {
+                yxalert(res.msg);
+                reload_delay();
+            } else if (res.error === '1') {
+                yxalert(res.msg);
+            }
+        });
+    });
+</script >
+
+<script src="__PUBLIC__/js/common.js" ></script >
+
+<script src="__PUBLIC__/share/clipboard/clipboard.min.js" ></script >
+<script src="__PUBLIC__/share/clipboard/clipboard.js" ></script >
+<link href="__PUBLIC__/share/clipboard/clipboard.css" rel="stylesheet" type="text/css" >
+
+</body >
+</html>

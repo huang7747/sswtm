@@ -1,0 +1,118 @@
+{
+"shaWu":{
+  "text":"商务放端后台",
+  "list":[
+    {
+      "text": "常用查询",
+      "list": [
+        {"href": "requestgame", "id": "sha", "text": "安卓游戏管理"}
+      ]
+    }
+  ]
+},
+  "oatuig":{
+    "text":"推广OA放端后台",
+    "list":[
+      {
+        "text": "常用查询",
+        "list": [
+          {"href": "tt/1", "id": "o", "text": "平台游戏汇总"},
+          {"href": "tt/1", "id": "o", "text": "推广小组统计"},
+          {"href": "tt/1", "id": "o", "text": "小组每日汇总"},
+          {"href": "tt/1", "id": "o", "text": "每日总汇总"},
+          {"href": "tt/1", "id": "o", "text": "推广员汇总"},
+          {"href": "tt/1", "id": "o", "text": "推广链接汇总"}
+        ]
+      },
+      {
+        "text": "充值注册查询",
+        "list": [
+          {"href": "tt/1", "id": "oa", "text": "充值明细查询"},
+          {"href": "tt/1", "id": "oa", "text": "每日充值汇总"},
+          {"href": "tt/1", "id": "oa", "text": "注册明细查询"},
+          {"href": "tt/1", "id": "oa", "text": "每日注册汇总"},
+          {"href": "tt/1", "id": "oa", "text": "按推广员统计"},
+          {"href": "tt/1", "id": "oa", "text": "按小组统计"},
+          {"href": "tt/1", "id": "oa", "text": "按日统计"},
+          {"href": "tt/1", "id": "oa", "text": "按月统计"},
+          {"href": "tt/1", "id": "oa", "text": "按平台游戏统计"}
+        ]
+      },
+      {
+        "text": "汇总查询",
+        "list": [
+          {"href": "tt/1", "id": "oat", "text": "推广员每日"},
+          {"href": "tt/1", "id": "oat", "text": "每日推广员"},
+          {"href": "tt/1", "id": "oat", "text": "推广员每月"},
+          {"href": "tt/1", "id": "oat", "text": "每月推广员"},
+          {"href": "tt/1", "id": "oat", "text": "推广包每日"},
+          {"href": "tt/1", "id": "oat", "text": "按推广包统计"},
+          {"href": "tt/1", "id": "oat", "text": "账号角色查询"},
+          {"href": "tt/1", "id": "oat", "text": "充值角色查询"},
+          {"href": "tt/1", "id": "oat", "text": "角色查询统计"}
+
+        ]
+      },
+      {
+        "text": "排行榜",
+        "list": []
+      },
+      {
+        "text": "员工绩效等",
+        "list": [
+          {"href": "tt/1", "id": "oatu", "text": "今日业绩"},
+          {"href": "tt/1", "id": "oatu", "text": "每日评级"},
+          {"href": "tt/1", "id": "oatu", "text": "绩效机制"},
+          {"href": "tt/1", "id": "oatu", "text": "业绩指标"},
+          {"href": "tt/1", "id": "oatu", "text": "玩家登录"},
+          {"href": "tt/1", "id": "oatu", "text": "组玩家登录"},
+          {"href": "tt/1", "id": "oatu", "text": "玩家详情"},
+          {"href": "tt/1", "id": "oatu", "text": "等级更新"},
+          {"href": "tt/1", "id": "oatu", "text": "当前等级"}
+        ]
+      }
+    ]
+  },
+  "tuanzha":{
+    "text":"团长后台",
+    "list":[
+      {
+        "text": "常用查询",
+        "list": [
+          {"href": "tt/1", "id": "tu1", "text": "平台游戏汇总"},
+          {"href": "tt/1", "id": "tu2", "text": "平台游戏汇总"},
+          {"href": "tt/1", "id": "tu3", "text": "平台游戏汇总"},
+          {"href": "tt/1", "id": "tu4", "text": "平台游戏汇总"},
+          {"href": "tt/1", "id": "tu5", "text": "平台游戏汇总"},
+          {"href": "tt/1", "id": "tu6", "text": "平台游戏汇总"},
+          {"href": "tt/1", "id": "tu7", "text": "平台游戏汇总"}
+        ]
+      }
+    ]
+  },
+  "tuiguan":{
+    "text":"推广员系统",
+    "list":[
+      {
+        "text": "首页",
+        "list": [
+          {"href": "tuiguan/1", "id": "tui1", "text": "每日充值"},
+          {"href": "tuiguan/1", "id": "tui2", "text": "充值明细查询"},
+          {"href": "tuiguan/1", "id": "tui3", "text": "注册眀细查询"},
+          {"href": "tuiguan/1", "id": "tui4", "text": "角色等级查询"}
+        ]
+      },
+      {
+        "text": "其他功能",
+        "list": [
+          {"href": "tuiguan/1", "id": "tuig1", "text": "我的推广链接"},
+          {"href": "tuiguan/1", "id": "tuig2", "text": "推广链接申请"},
+          {"href": "tuiguan/1", "id": "tuig3", "text": "等级更新计录"},
+          {"href": "tuiguan/1", "id": "tuig4", "text": "员工等级制度"},
+          {"href": "tuiguan/1", "id": "tuig5", "text": "员工个人信息"},
+          {"href": "tuiguan/1", "id": "tuig6", "text": "登入密码修改"}
+        ]
+      }
+    ]
+  }
+}

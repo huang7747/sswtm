@@ -1,0 +1,227 @@
+<div class="tab-content" id="tabContent" style="border:0;">
+    <div class="tab-pane active" id="home">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <!-------注册数据-------->
+                <div class="row">
+                    <div class="space-6"></div>
+                    <div class="vspace-sm"></div>
+                    <div class="col-sm-6">
+                        <div class="widget-box">
+                            <div class="widget-header widget-header-flat widget-header-small">
+                                <h5>
+                                    <i class="icon-signal"></i>
+                                    今天注册排名
+                                </h5>
+
+                                <div class="widget-toolbar no-border">
+                                    <button data-toggle="dropdown" class="btn btn-minier btn-primary dropdown-toggle" id="show_date">
+                                        今天
+                                        <i class="icon-angle-down icon-on-right bigger-110"></i>
+                                    </button>
+
+                                    <ul class="dropdown-menu pull-right dropdown-125 dropdown-lighter dropdown-caret">
+                                        <li class="active">
+                                            <a class="blue" href="#">
+                                                <i class="icon-caret-right bigger-110">&nbsp;</i>
+                                                今天
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#" onclick="get_tu()">
+                                                <i class="icon-caret-right bigger-110 invisible">&nbsp;</i>
+                                                前天
+                                            </a>
+                                        </li>
+
+
+                                        <li>
+                                            <a href="#">
+                                                <i class="icon-caret-right bigger-110 invisible">&nbsp;</i>
+                                                上月今天
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <div id="piechart-placeholder" style="width: 90%; min-height: 150px; padding: 0px; position: relative;">
+                                        <canvas class="flot-base" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 591px; height: 150px;" width="591" height="150"></canvas>
+                                        <canvas class="flot-overlay" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 591px; height: 150px;" width="591" height="150"></canvas>
+                                    </div>
+
+                                    <div class="hr hr8 hr-double"></div>
+
+                                    <div class="clearfix">
+                                        <div class="grid3">
+                                                        <span class="grey">
+                                                                <i class="icon-eye-open icon-2x blue"></i>
+                                                                &nbsp; 点击
+                                                        </span>
+                                            <h4 class="bigger pull-right"></h4>
+                                        </div>
+
+                                        <div class="grid3">
+                                                        <span class="grey">
+                                                                <i class="icon-cloud-download icon-2x purple"></i>
+                                                                &nbsp; 下载
+                                                        </span>
+                                            <h4 class="bigger pull-right"></h4>
+                                        </div>
+
+                                        <div class="grid3">
+                                                        <span class="grey">
+                                                                <i class="icon-desktop icon-2x red"></i>
+                                                                &nbsp; 激活
+                                                        </span>
+                                            <h4 class="bigger pull-right"></h4>
+                                        </div>
+                                    </div>
+                                </div><!-- /widget-main -->
+                            </div><!-- /widget-body -->
+                        </div><!-- /widget-box -->
+                    </div><!-- /span -->
+                    <div class="col-sm-6">
+                        <div class="widget-box">
+                            <div class="widget-header widget-header-flat widget-header-small">
+                                <h5>
+                                    <i class="icon-signal"></i>
+                                    本周注册数据排名
+                                </h5>
+
+                                <div class="widget-toolbar no-border">
+                                    <button data-toggle="dropdown" class="btn btn-minier btn-primary dropdown-toggle">
+                                        本周
+                                        <i class="icon-angle-down icon-on-right bigger-110"></i>
+                                    </button>
+
+                                    <ul class="dropdown-menu pull-right dropdown-125 dropdown-lighter dropdown-caret">
+                                        <li class="active">
+                                            <a class="blue" href="#">
+                                                <i class="icon-caret-right bigger-110">&nbsp;</i>
+                                                上周
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">
+                                                <i class="icon-caret-right bigger-110 invisible">&nbsp;</i>
+                                                本月
+                                            </a>
+                                        </li>
+
+
+                                        <li>
+                                            <a href="#">
+                                                <i class="icon-caret-right bigger-110 invisible">&nbsp;</i>
+                                                上月
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <div id="piechart-placeholder_week" style="width: 90%; min-height: 150px; padding: 0px; position: relative;">
+                                        <canvas class="flot-base" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 591px; height: 150px;" width="591" height="150"></canvas>
+                                        <canvas class="flot-overlay" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 591px; height: 150px;" width="591" height="150"></canvas>
+                                    </div>
+
+                                    <div class="hr hr8 hr-double"></div>
+
+                                    <div class="clearfix">
+                                        <div class="grid3">
+                                                        <span class="grey">
+                                                                <i class="icon-eye-open icon-2x blue"></i>
+                                                                &nbsp; 点击
+                                                        </span>
+                                            <h4 class="bigger pull-right"></h4>
+                                        </div>
+
+                                        <div class="grid3">
+                                                        <span class="grey">
+                                                                <i class="icon-cloud-download icon-2x purple"></i>
+                                                                &nbsp; 下载
+                                                        </span>
+                                            <h4 class="bigger pull-right"></h4>
+                                        </div>
+
+                                        <div class="grid3">
+                                                        <span class="grey">
+                                                                <i class="icon-desktop icon-2x red"></i>
+                                                                &nbsp; 激活
+                                                        </span>
+                                            <h4 class="bigger pull-right"></h4>
+                                        </div>
+                                    </div>
+                                </div><!-- /widget-main -->
+                            </div><!-- /widget-body -->
+                        </div><!-- /widget-box -->
+                    </div>
+
+                </div><!-- /row -->
+                <!-------充值数据-------->
+                <div class="hr hr32 hr-dotted"></div>
+                <div class="row">
+                    <!--日充值数据-->
+                    <div class="col-sm-12">
+                        <div class="widget-box transparent">
+                            <div class="widget-header widget-header-flat">
+                                <h4 class="lighter">
+                                    <i class="icon-signal"></i>
+                                    今天充值排名
+                                </h4>
+
+                                <div class="widget-toolbar">
+                                    <a data-action="collapse" href="#">
+                                        <i class="icon-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="widget-body">
+                                <div class="widget-main padding-4">
+                                    <div id="sales-charts" style="width: 100%; height: 220px; padding: 0px; position: relative;">
+                                        <canvas class="flot-base" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 958px; height: 220px;" width="958" height="220"></canvas>
+                                    </div>
+                                </div><!-- /widget-main -->
+                            </div><!-- /widget-body -->
+                        </div><!-- /widget-box -->
+                    </div>
+                    <!--周充值数据-->
+                    <div class="col-sm-12">
+                        <div class="widget-box transparent">
+                            <div class="widget-header widget-header-flat">
+                                <h4 class="lighter">
+                                    <i class="icon-signal"></i>
+                                    本周充值排名【-】
+                                </h4>
+
+                                <div class="widget-toolbar">
+                                    <a data-action="collapse" href="#">
+                                        <i class="icon-chevron-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="widget-body">
+                                <div class="widget-main padding-4">
+                                    <div id="sales-charts_week" style="width: 100%; height: 220px; padding: 0px; position: relative;">
+                                        <canvas class="flot-base" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 958px; height: 220px;" width="958" height="220"></canvas>
+                                    </div>
+                                </div><!-- /widget-main -->
+                            </div><!-- /widget-body -->
+                        </div><!-- /widget-box -->
+                    </div>
+                </div>
+            </div><!-- /row -->
+
+            <!-- PAGE CONTENT ENDS -->
+        </div><!-- /.col -->
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap jj" >
+    <ul class="nav nav-tabs" >
+        <li ><a href="{:U('Notice/index')}" >消息列表</a ></li >
+        <li class="active" ><a href="#" target="_self" >添加消息</a ></li >
+    </ul >
+    <div class="common-form" >
+        <form method="post" class="form-horizontal js-ajax-form" action="{:U('Notice/add_post')}" >
+            <fieldset >
+                <div class="control-group" >
+                    <label class="control-label" >游戏:</label >
+                    <div class="controls" >
+                        <select class="select_2" name="app_id" id="selected_id" >
+                            <foreach name="games" key="k" item="vo" >
+                                <option value="{$k}" >{$vo}</option >
+                            </foreach >
+                        </select >
+                    </div >
+                </div >
+
+                <div class="control-group" >
+                    <label class="control-label" >消息标题:</label >
+                    <div class="controls" >
+                        <input type="text" class="input" name="title" value="" >
+                    </div >
+                </div >
+                <div class="control-group" >
+                    <label class="control-label" >消息内容:</label >
+                    <div class="controls" >
+                        <textarea class="form-control comment-postbox" name="content"
+                                  style="height:120px;width: 50%;" ></textarea >
+                    </div >
+                </div >
+                <div class="control-group" >
+                    <label class="control-label" >开始显示时间:</label >
+                    <div class="controls" >
+                        <input type="text" name="start_time" class="js-datetime" value="" style="width: 100px;"
+                               autocomplete="off" >
+                    </div >
+                </div >
+            </fieldset >
+            <div class="form-actions" >
+                <button type="submit" class="btn btn-primary btn_submit js-ajax-submit" >添加</button >
+                <a class="btn" href="{:U('Notice/index')}" >返回</a >
+            </div >
+        </form >
+    </div >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+
+</body >
+</html>

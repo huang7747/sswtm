@@ -1,0 +1,19 @@
+/*前台自定义分页*/
+.paging span, .paging a {
+    border: 1px solid #FF6700;
+    padding: 2px 5px;
+    cursor: pointer;
+    margin: 0 5px;
+    color: #333333;
+    text-decoration: none;
+}
+
+.paging .current {
+    background-color: #FF6700;
+    color: #FFFFFF;
+}
+
+.paging {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

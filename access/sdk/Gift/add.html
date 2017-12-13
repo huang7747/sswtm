@@ -1,0 +1,150 @@
+<admintpl file="header" />
+<style >
+    .fieled_info {
+        color: red;
+        margin-left: 180px;
+        margin-top: 10px;
+        width: 100%;
+        float: left;
+    }
+
+    .controls {
+        /*        width:500px;
+                float:left;*/
+    }
+</style >
+</head>
+<body class="J_scroll_fixed" >
+<php >
+$luxury_yes=$gift['is_luxury']==2?"checked":"";
+$luxury_no=$gift['is_luxury']!=2?"checked":"";
+$rmd_yes=$gift['is_rmd']==2?"checked":"";
+$rmd_no=$gift['is_rmd']!=2?"checked":"";
+$hot_yes=$gift['is_hot']==2?"checked":"";
+$hot_no=$gift['is_hot']!=2?"checked":"";
+</php >
+<div class="wrap jj" >
+    <ul class="nav nav-tabs" >
+        <li ><a href="{:U('Gift/giftList')}" >礼包列表</a ></li >
+        <li class="active" ><a href="#" target="_self" >添加礼包</a ></li >
+    </ul >
+    <div class="common-form" >
+        <form method="post" class="form-horizontal js-ajax-form" action="{:U('Gift/add_post')}" >
+            <fieldset >
+                <div class="control-group" >
+                    <label class="control-label" >游戏:</label >
+                    <div class="controls" >
+                        <select class="select_2" name="appid" id="selected_id" >
+                            <foreach name="games" key="k" item="vo" >
+                                <option value="{$k}" >{$vo}</option >
+                            </foreach >
+                        </select >
+                    </div >
+                </div >
+
+                <div class="control-group" >
+                    <label class="control-label" >礼包标题:</label >
+                    <div class="controls" >
+                        <input type="text" class="input" name="title" value="" placeholder="请输入礼包标题" >
+                        <span style="color:red" >例：新手大礼包</span >
+                    </div >
+                </div >
+                <if condition="1 == C('G_NEW_APP')" >
+                <div class="control-group" >
+                    <label class="control-label" >所需积分:</label >
+                    <div class="controls" >
+                        <input type="number" class="input" name="condition" value="0" min="0" ste="1"
+                               onkeyup="clearNoNum(this,0,0)" onafterpaste="clearNoNum(this,0,0)"
+                               placeholder="请输入所需积分" >
+                        <span style="color:red" >填入领取礼包所需积分 0 表示不需要免费礼包</span >
+                    </div >
+                 </div >
+                </if >
+                <div class="control-group" >
+                    <label class="control-label" >礼包码:</label >
+                    <div class="controls" >
+                        <textarea id="code" name="code" rows="10" cols="75" style="width:50%;" ></textarea >
+                    <span style="color:red" >注意：每行一个礼包码，请保证礼包码输入正确</span >
+                    </div >
+
+                </div >
+                <div class="control-group" >
+                    <label class="control-label" >礼包内容:</label >
+                    <div class="controls" >
+                        <textarea class="form-control comment-postbox" name="content" rows="3" cols="75"
+                                  style="width: 50%;" ></textarea >
+                        <span style="color:red" >请输入该礼包所包含的物品内容</span >
+                    </div >
+
+                </div >
+                <div class="control-group" >
+                    <label class="control-label" >使用方法:</label >
+                    <div class="controls" >
+                        <textarea class="form-control comment-postbox" name="func" rows="3" cols="75"
+                                  style="width: 50%;" ></textarea >
+                        <span style="color:red" >请输入该礼包使用方法</span >
+                    </div >
+                </div >
+                <div class="control-group" >
+                    <label class="control-label" >兑换期限:</label >
+                    <div class="controls" >
+                        <input type="text" inline name="starttime" class="js-datetime" value="" style="width: 100px;"
+                               autocomplete="off" >--
+                        <input type="text" inline class="js-datetime" name="endtime" value="" style="width: 100px;"
+                               autocomplete="off" >
+                        <span style="color:red" >请选择该礼包的兑换时间期限，确保此期限内礼包兑换在有效期内</span >
+                    </div >
+
+                </div >
+                <if condition="1 == C('G_NEW_APP')" >
+                    <div class="control-group" >
+                    <label class="control-label" >是否推荐:</label >
+                    <div class="controls" >
+                         <label class="radio inline" > <input type="radio" name="rmd" value="1" {$rmd_no} >不推荐
+                            </label >
+                            <label class="radio inline" > <input type="radio" name="rmd" value="2" {$rmd_yes} >推荐
+                            </label >
+                    </div >
+                </div >
+                <div class="control-group" >
+                    <label class="control-label" >是否豪华礼包:</label >
+                    <div class="controls" >
+                         <label class="radio inline" > <input type="radio" name="luxury" value="1" {$luxury_no} >普通
+                            </label >
+                            <label class="radio inline" > <input type="radio" name="luxury" value="2" {$luxury_yes} >豪华
+                            </label >
+                    </div >
+                </div >
+                <div class="control-group" >
+                    <label class="control-label" >是否热门礼包:</label >
+                    <div class="controls" >
+                         <label class="radio inline" > <input type="radio" name="hot" value="1" {$hot_no} >不热门
+                            </label >
+                            <label class="radio inline" > <input type="radio" name="hot" value="2" {$hot_yes} >热门
+                            </label >
+                    </div >
+                </div >
+                </if >
+				
+				<div class="control-group" >
+                    <label class="control-label" >人气:</label >
+                    <div class="controls" >
+                        <input type="text" name="hits_cnt" class="form-control comment-postbox" value="0" style="width: 100px;">
+                        <span style="color:red" >人气高优先显示在官网首页 </span >
+                    </div >
+
+                </div >
+            </fieldset >
+            <div class="form-actions" >
+                <button type="submit"
+                        class="btn btn-primary btn_submit js-ajax-submit" >添加
+                </button >
+                <a class="btn" href="{:U('Gift/giftList')}" >返回</a >
+            </div >
+        </form >
+    </div >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+
+</body >
+</html>

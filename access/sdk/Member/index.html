@@ -1,0 +1,119 @@
+<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap js-check-wrap" >
+    <ul class="nav nav-tabs" >
+        <li class="active" ><a href="{:U('Member/index')}" >玩家管理</a ></li >
+    </ul >
+
+    <form class="well form-search" method="get" action="{:U('Sdk/Member/index')}" >
+        <div class="search_type cc mb10" >
+            <div class="mb10" >
+                                <span class="mr20" >
+                                    账号： 
+                                    <input type="text" name="username" style="width: 150px;" value="{$formget.username}"
+                                           placeholder="请输入帐号..." >
+                                    Email： 
+                                    <input type="text" name="email" style="width: 150px;" value="{$formget.email}"
+                                           placeholder="请输入Email..." >
+                                    手机号：
+                                    <input type="text" name="mobile" style="width: 150px;" value="{$formget.mobile}"
+                                           placeholder="请输入手机号..." >
+                                    imei码：
+                                    <input type="text" name="imei" style="width: 150px;" value="{$formget.imei}"
+                                           placeholder="请输入IMEI码..." >
+                                    <br /><br />                                
+                                    注册游戏：
+                                    {$app_select}
+                                    注册渠道：
+                                    {$agent_select}
+                                    账号状态：
+                                    {$member_status_select}
+                                    <br /><br />
+                                    注册时间：
+                                    <input type="text" name="start_time" class="js-date" value="{$formget.start_time}"
+                                           placeholder="开始时间..." style="width: 110px;" autocomplete="off" >-
+                                    <input type="text" class="js-date" name="end_time" value="{$formget.end_time}"
+                                           placeholder="结束时间..." style="width: 110px;" autocomplete="off" > &nbsp; &nbsp;
+                                    <input type="submit" class="btn btn-primary" value="搜索" />
+                                </span >
+            </div >
+        </div >
+    </form >
+    <form class="js-ajax-form" action="" method="post" >
+        <table class="table table-hover table-bordered" >
+            <thead >
+            <tr >
+                <th >账号</th >
+                <th >手机</th >
+                <th >EMAIL</th >
+                <th >注册IMEI码</th >
+                <th >注册游戏</th >
+                <th >注册渠道</th >
+                <th >注册时间</th >
+                <th >状态</th >
+                <switch name="user_type" >
+                    <case value="1" >
+                        <th >管理操作</th >
+                    </case >
+                </switch >
+            </tr >
+            </thead >
+            <tbody >
+
+            <foreach name="members" item="vo" >
+                <tr >
+                    <td >{$vo.username}</td >
+                    <td >
+                        <if condition="empty($vo['mobile'])" >
+                            该用户还未绑定手机
+                            <else />
+                            {$vo.mobile}
+                        </if >
+                    </td >
+                    <td >
+                        <if condition="empty($vo['email'])" >
+                            该用户还未绑定邮箱
+                            <else />
+                            {$vo.email}
+                        </if >
+                    </td >
+                    <td >{$vo.imei}</td >
+
+                    <td >
+                        <if condition="0 eq $vo['app_id']" >
+                            官网注册
+                            <else />
+                            {$games[$vo['app_id']]}
+                        </if >
+                    </td >
+                    <td >
+                        <if condition="0 eq $vo['agent_id']" >
+                            官方注册
+                            <else />
+                            {$agents[$vo['agent_id']]}
+                        </if >
+                    </td >
+                    <td >{$vo.reg_time|date='Y-m-d H:i:s',###}</td >
+                    <td >{$memstatus[$vo['status']]}</td >
+                            <td >
+                                <a href='{:U("Sdk/Member/edit",array("id"=>$vo["id"]))}' >详情</a > |
+                                <if condition="$vo['status'] eq 2 || $vo['status'] eq 1" >
+                                    <a href="{:U('Sdk/Member/ban',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn"
+                                       data-msg="您确定要冻结此用户吗？" >冻结</a >
+                                    <else />
+                                    <a href="{:U('Sdk/Member/cancelban',array('id'=>$vo['id']))}"
+                                       class="js-ajax-dialog-btn" data-msg="您确定要解封此用户吗？" >解封</a >
+                                </if >
+                            </td >
+                </tr >
+            </foreach >
+            </tbody >
+        </table >
+        <div class="pagination" >{$Page}</div >
+        <div >共{$total_rows}个玩家</div >
+    </form >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+</body >
+</html>

@@ -1,0 +1,108 @@
+﻿<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap js-check-wrap" >
+    <div class="wrap js-check-wrap" >
+        <ul class="nav nav-tabs" >
+            <li class="active" ><a href="#" >商品列表</a ></li >
+            <li ><a href="{:U('Com7881/add')}" >添加商品</a ></li >
+        </ul >
+        <form class="well form-search" method="post" action="{:U('Com7881/index')}" >
+            <div class="search_type cc mb10" >
+                <div class="mb10" >
+                    <php >$types = array('0'=>'选择类型','1'=>'首充号','2'=>'首充号续充');</php >
+					<span class="mr20" >
+					类型：	
+					<select class="select_2" name="typeid" style="width: 200px;" id="selected_id" >
+                        <foreach name="types" key="k" item="vo" >
+                            <php >$ps_select=$k==$formget['typeid'] ?"selected":"";</php >
+                            <option value="{$k}" {$ps_select} >{$vo}</option >
+                        </foreach >
+                    </select >
+					&nbsp;&nbsp; &nbsp;&nbsp; 
+					 </span >
+                    游戏：
+                    <select class="select_2" name="gid" id="selected_id" style="width: 200px;" >
+                        <foreach name="games" key="k" item="vo" >
+                            <php >$gid_select=$k==$formget['gid'] ?"selected":"";</php >
+                            <option value="{$k}" {$gid_select} >{$vo}</option >
+                        </foreach >
+                    </select >
+                    &nbsp;&nbsp;
+                    商品名：
+                    <select class="select_2" name="goodsid" id="selected_id" style="width: 200px;" >
+                        <foreach name="goods" key="k" item="vo" >
+                            <php >$gid_select=$k==$formget['goodsid'] ?"selected":"";</php >
+                            <option value="{$k}" {$gid_select} >{$vo}</option >
+                        </foreach >
+                    </select >
+					<span >
+					&nbsp;&nbsp;
+					<br ><br >
+					状态 
+					<php >$statuss=array('0'=>'选择状态','1'=>'未上架','2'=>'已上架','3'=>'下架');</php >
+					<select class="select_2" name="status" style="width: 200px;" id="selected_id" >
+                        <foreach name="statuss" key="k" item="vo" >
+                            <php >$ps_select=$k==$formget['status'] ?"selected":"";</php >
+                            <option value="{$k}" {$ps_select} >{$vo}</option >
+                        </foreach >
+                    </select >
+					&nbsp;&nbsp;&nbsp;&nbsp;
+                    <!-- 		时间：
+                                <input type="text" name="start_time"
+                                    class="js-date" value="{$formget.start_time|default=''}" placeholder="开始时间..."
+                                    style="width: 100px;" autocomplete="off">
+                                -
+                                <input	type="text" class="js-date" name="end_time" placeholder="时间..."
+                                    value="{$formget.end_time}" style="width: 100px;"
+                                    autocomplete="off"> &nbsp; &nbsp;  -->
+					</span >
+                    <input type="submit" name='submit' class="btn btn-primary" value="搜索" />
+                </div >
+            </div >
+        </form >
+        <form class="js-ajax-form" action="" method="post" >
+            <table class="table table-hover table-bordered table-list" >
+                <thead >
+                <tr >
+                    <th >序号</th >
+                    <th width="120" >7881商品ID</th >
+                    <th width="120" >商品名</th >
+                    <th >游戏</th >
+                    <th >商品类型</th >
+                    <th >价格</th >
+                    <th >折后价格</th >
+                    <th >{:C('CURRENCY_NAME')}数</th >
+                    <th >折扣</th >
+                    <th >状态</th >
+                    <th >操作</th >
+                </tr >
+                </thead >
+                <foreach name="orders" item="vo" >
+                    <tr >
+                        <td >{$vo.id}</td >
+                        <td >{$vo.goods_id}</td >
+                        <td >{$vo.goods_name}</td >
+                        <td >{$vo.gamename}</td >
+                        <td >{$types[$vo['type_id']]}</td >
+                        <td >{$vo.price}</td >
+                        <td >{$vo.real_price}</td >
+                        <td >{$vo.gm_cnt}</td >
+                        <td >{$vo.discount}</td >
+                        <td >
+                            {$statuss[$vo[status]]}
+                        </td >
+                        <td >
+                            <a href="{:U('Com7881/edit',array('id'=>$vo['id']))}" >编辑 </a >
+                        </td >
+                    </tr >
+                </foreach >
+
+            </table >
+            <div class="pagination" >{$Page}</div >
+
+        </form >
+    </div >
+    <script src="__PUBLIC__/js/common.js" ></script >
+</body >
+</html>

@@ -1,0 +1,72 @@
+<form class="js-ajax-form" action="" method="post" ng-controller="searchgame">
+    <table class="table table-hover table-bordered table-list" >
+        <thead >
+        <tr >
+            <th width=50 >游戏ID</th >
+            <th width=150 >游戏名称</th >
+            <th width=50 >合作公司</th >
+            <th width=50 >状态</th >
+            <th width=100 >上线时间</th >
+            <th width=150 >回调地址</th >
+            <th width=150 >母包地址</th >
+            <th width=120 >管理操作</th >
+        </tr >
+        </thead >
+        <tr ng-repeat="game in gamelist">
+            <td >{{game.id}}</td >
+            <td >
+                <!--<img ng-src="{{game.icon}}"  width="40" />-->
+                {{game.name}}
+            </td >
+            <td > {{game.cooperation}}</td >
+            <td >{{game.status | statusfilter}}</td >
+            <td >
+                <a href="javascript:void(0)" ng-click="linegame(game.id,game.status)"
+                   class="js-ajax-dialog-btn" data-msg="确定上线游戏？" ng-if="game.status!=2" >上线游戏</a >
+                <span ng-if="game.status==2">
+                            {{game.run_time|date}}<br />
+                            <a href="javascript:void(0)" ng-click="linegame(game.id,game.status)" class="js-ajax-dialog-btn" data-msg="确定下线游戏？"  >
+                                下线游戏</a >
+                        </span>
+
+            </td >
+            <td style="word-wrap:break-word;word-break:break-all;" >
+                            <span ng-if="!game.cpurl">
+                                暂无回调<br />
+                                <a href="javascript:void(0)" ng-click="gotable('#/huitiao/'+game.id)" >点击添加回调</a >
+                            </span>
+                <span ng-if="game.cpurl">
+                                {{game.cpurl}}<br />
+                                <a href="javascript:void(0)" ng-click="gotable('#/huitiao/'+game.id)" >点击修改回调</a >
+                            </span>
+            </td >
+
+            <td style="word-wrap:break-word;word-break:break-all; " >
+                            <span ng-if="!game.packageurl">
+                                暂无母包({{game.initial}})<br />
+                                <a href="{:U('Game/addpackageurl',array('appid'=>$vo['id']))}" >生成母包</a >
+                            </span>
+                <span ng-if="game.packageurl">
+                                {{game.packageurl}}<br/>
+                               <a href="javascript:;" class=" link_copy_btn " data-clipboard-text="{{game.packageurl}}">复制</a >
+                           </span>
+                <!-- <a href="{:U('Game/editpackageurl',array('appid'=>$vo['id']))}">点击更新母包</a> -->
+            </td >
+
+            <td >
+                <a href="javascript:void(0)" ng-click="gotable('#/getparam/'+game.id)" >对接参数 </a >
+                <!--|
+                <a href="{:U('Game/GamePayway/edit',array('appid'=>$vo['id']))}" >支付配置 </a >-->
+                <span ng-if="game.status!=0">
+                            |
+                            <a href="javascript:void(0)" ng-click="delgame(game.id,1)" class="js-ajax-delete" > 删除</a >
+                        </span>
+            </td >
+        </tr >
+    </table >
+    <div class="pagination">&nbsp;
+        <a href="javascript:void(0)" ng-click="gotable('#/requestgame/'+$index)" ng-repeat="le in list"> {{$index+1}}</a>&nbsp;
+        <a href="javascript:void(0)" ng-click="gotable('#/requestgame/'+id)">下一页</a>
+        <a href="javascript:void(0)" ng-click="gotable('#/requestgame/'+(+list.length-1))">尾页</a>
+    </div>
+</form >

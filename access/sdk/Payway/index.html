@@ -1,0 +1,88 @@
+﻿<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap js-check-wrap" >
+    <ul class="nav nav-tabs" >
+        <if condition="$liststatus eq 4" >
+            <li class="active" >
+                <else />
+            <li >
+        </if >
+        <a href="{:U('Payway/index')}" >支付列表</a >
+        </li>
+        <if condition="$liststatus eq 1" >
+            <li class="active" >
+                <else />
+            <li >
+        </if >
+        <a href="{:U('Payway/index',array('liststatus'=>1))}" >生效列表</a >
+        </li>
+        <if condition="$liststatus eq 3" >
+            <li class="active" >
+                <else />
+            <li >
+        </if >
+        <a href="{:U('Payway/index',array('liststatus'=>3))}" >未添加列表</a >
+        </li>
+        <if condition="$liststatus eq 0" >
+            <li class="active" >
+                <else />
+            <li >
+        </if >
+        <a href="{:U('Payway/index',array('liststatus'=>0))}" >申请中列表</a >
+        </li>
+    </ul >
+
+    <form class="well form-search" method="post" action="{:U('Payway/index')}" >
+        <div class="search_type cc mb10" >
+            <div class="mb10" >
+					<span class="mr20" >
+						支付方式： 
+						<input type="text" name="realname" style="width: 200px;" value="{$realname}"
+                               placeholder="请输入支付名称..." >
+						<input type="submit" name="submit" class="btn btn-primary" value="搜索" />
+					</span >
+            </div >
+        </div >
+    </form >
+    <form class="js-ajax-form" action="" method="post" >
+        <table class="table table-hover table-bordered table-list" >
+            <thead >
+            <tr >
+                <th >支付方式</th >
+                <th >状态</th >
+                <th width="150" >管理操作</th >
+                <th width="150" >帮助</th >
+            </tr >
+            </thead >
+            <php >
+                $status=array("3"=>"未添加","0"=>"申请更新中","1"=>"已生效","2"=>"未通过");
+                $hurllist=array("2"=>"https://b.alipay.com/order/productDetail.htm?productId=2015110218010538&tabId=2#ps-tabinfo-hash",
+                "6"=>"http://www.yeepay.com/article/specialActivities/queryArticle/558baf352b9c373d1b7aa3c6#",
+                "7"=>"http://testmobile.payeco.com:6526/manager/center.html");
+            </php >
+            <foreach name="ways" item="vo" >
+                <tr >
+                    <td >{$vo.realname}</td >
+                    <td >{$status[$vo['paystatus']]}</td >
+                    <td >
+                        <if condition="$vo['paystatus'] eq 3" >
+                            <a href="{:U('Payway/payAdd',array('id'=>$vo['id']))}" >添加</a >
+                            <else />
+                            <a href="{:U('Payway/payEdit',array('id'=>$vo['id']))}" >修改</a >
+                        </if >
+                    </td >
+                    <td >
+                        <a target="_blank" href="{$hurllist[$vo['id']]}" >点击了解如何申请</a >
+                    </td >
+                </tr >
+            </foreach >
+        </table >
+        <div class="pagination" >{$Page}</div >
+
+    </form >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+
+</body >
+</html>

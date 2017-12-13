@@ -1,0 +1,240 @@
+<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap jj" >
+    <div class="common-form" >
+        <ul class="nav nav-tabs" >
+            <li ><a href="{:U('Member/index')}" >玩家管理</a ></li >
+            <li class="active" ><a href="#" target="_self" >玩家详情</a ></li >
+        </ul >
+
+        <table class="table table-bordered table-hover" style="width:100%;" >
+            <tr >
+                <th >账号</th >
+                <th >状态</th >
+                <th >注册IMEI码</th >
+                <th >注册游戏</th >
+                <th >注册渠道</th >
+                <!--<th>平台币余额</th>-->
+                <th >累计充值</th >
+                <th >注册时间</th >
+            </tr >
+            <tr >
+                <td >{$data.username}</td >
+                <td >{$data.status_txt}</td >
+                <td >{$data.imei}</td >
+                <td >{$data.game_name}</td >
+                <td >
+
+                    {$data.agent_name}
+
+                    <button class="btn btn-success edit_agent_btn" >更改</button >
+
+                </td >
+                <!--<td>{$data.remain}</td>-->
+                <td >{$data.total|default=0}</td >
+                <td >{$data.reg_time|date="Y-m-d H:i:s",###}</td >
+            </tr >
+        </table >
+
+        <table class="table table-bordered table-hover edit_userinfo_div" style="width:600px;" >
+            <form method="post" id="edit_member_form" action="{:U('Member/edit_post')}" onsubmit="return false;" >
+                <tr >
+                    <td >登录密码</td >
+                    <td ><input type="password" class="input" name="password" value="" ></td >
+                    <td >
+                        <button class="btn btn-primary" >修改</button >
+                    </td >
+                </tr >
+                <tr >
+                    <td >绑定手机:</td >
+                    <td ><input type="text" class="input" name="mobile" value="{$data.mobile}" ></td >
+                    <td >
+                        <button class="btn btn-primary"  >修改</button >
+                    </td >
+                </tr >
+                <tr >
+                    <td >绑定邮箱:</td >
+                    <td ><input type="text" class="input" name="email" value="{$data.email}" ></td >
+                    <td >
+                        <button class="btn btn-primary" >修改</button >
+                    </td >
+                </tr >
+                </tr>
+            <if condition="!empty($data['email']) || !empty($data['mobile'])">
+                <tr>
+                 <td ><input type="hidden" class="input" name="clearsecurity" ></td >
+                    <td>
+                        <button class="btn btn-warning" > 清空密保</button >
+                    </td >
+                </tr >
+            </if>
+                <input type="hidden" name="mem_id" value="{$data.id}" />
+
+            </form >
+        </table >
+
+        <ul id="myTab" class="nav nav-tabs" style="width:100%;" >
+            <li class="active" ><a href="#role" data-toggle="tab" >游戏角色</a ></li >
+            <li ><a href="#login" data-toggle="tab" >登陆记录</a ></li >
+            <li ><a href="#charge" id="myTabDrop1" data-toggle="tab" >充值记录</a ></li >
+        </ul >
+
+        <div id="myTabContent" class="tab-content" >
+            <div class="tab-pane fade in active" id="role" >
+                <table class="table table-bordered table-hover" style="width:100%;" >
+                    <tr >
+                        <th >游戏</th >
+                        <th >区服</th >
+                        <th >角色名</th >
+                        <th >等级</th >
+                    </tr >
+                    <volist name='role_records' id='vo' >
+                        <tr >
+                            <td >{$vo.name}</td >
+                            <td >{$vo.server_name}</td >
+                            <td >{$vo.role_name}</td >
+                            <td >{$vo.role_level}</td >
+                        </tr >
+                    </volist >
+                </table >
+                <div class="pagination" >{$role_page}</div >
+            </div >
+
+            <div class="tab-pane fade" id="login" >
+                <table class="table table-bordered table-hover" style="width:100%;" >
+                    <tr >
+                        <th >登陆时间</th >
+                        <th >登陆游戏</th >
+                    </tr >
+                    <volist name='login_records' id='vo' >
+                        <tr >
+                            <td >{$vo.login_time|date="Y-m-d H:i:s",###}</td >
+                            <td >{$vo.game_name}</td >
+                        </tr >
+                    </volist >
+                </table >
+                <div class="pagination" >{$login_page}</div >
+            </div >
+
+            <div class="tab-pane fade" id="charge" >
+                <table class="table table-bordered table-hover" style="width:100%;" >
+                    <tr >
+                        <th >充值时间</th >
+                        <th >充值游戏</th >
+                        <th >充值金额</th >
+                    </tr >
+                    <volist name='charge_records' id='vo' >
+                        <tr >
+                            <td >{$vo.create_time|date="Y-m-d H:i:s",###}</td >
+                            <td >{$vo.game_name}</td >
+                            <td >{$vo.amount}</td >
+                        </tr >
+                    </volist >
+                </table >
+                <div class="pagination" >{$charge_page}</div >
+            </div >
+        </div >
+    </div >
+</div >
+<style >
+    .funcs {
+        padding: 0 0 10px 0;
+    }
+
+    .pop_up_form_div {
+        width: 300px;
+        padding: 20px 20px 40px 20px;
+    }
+
+    .pop_up_form_div .row {
+        width: 300px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .pop_up_form_div input[type='text'], .pop_up_form_div input[type='password'] {
+        width: 280px;
+    }
+
+    .pop_up_form_submit_btn {
+        width: 300px;
+    }
+
+    input[disabled='disabled'] {
+        background-color: #FFFFFF;
+        border-bottom: 1px solid #CCCCCC;
+    }
+
+</style >
+
+<div class="pop_up_form_div container" id='give_agent' style="display:none;" >
+    <form id='popup_form' method='post' onsubmit='return false;' >
+        <div class="row" >
+            <div class="col-md-4" >选择渠道</div >
+            <div class="col-md-8" >
+                {$agent_select}
+            </div >
+        </div >
+
+        <div class="row" >
+            <button class="btn btn-success pop_up_form_submit_btn" data-memid="{$data.id}" id='agent_submit_btn'
+                    style="margin-top:20px;" >确认
+            </button >
+        </div >
+    </form >
+</div >
+
+<script src="__PUBLIC__/js/common.js" ></script >
+
+<script >
+    $(".edit_agent_btn").click(function () {
+        layer.open({
+            type   : 1,
+            shift  : 2,
+            area   : '350px',
+            title  : "修改玩家所属渠道",
+            content: $('#give_agent'),
+            cancel : function (index) {
+                layer.close(index);
+            }
+        });
+    });
+
+    $("#agent_submit_btn").click(function () {
+        var mem_id   = $(this).attr("data-memid");
+        var agent_id = $("#give_agent select").val();
+//            alert(mem_id+" "+agent_id);
+        var data     = {"mem_id": mem_id, "agent_id": agent_id};
+        var url      = "{:U('Core/Member/changeAgent')}";
+        $.post(url, data, function (res) {
+            if (res.error === '0') {
+                yxalert(res.msg);
+                reload_delay();
+            } else if (res.error === '1') {
+                yxalert(res.msg);
+            }
+        });
+    });
+
+    $(".edit_userinfo_div button").click(function () {
+        var s      = $(this).parent("td").prev("td").children("input");
+        var v      = s.val();
+        var name   = s.attr("name");
+        var mem_id = $("input[name='mem_id']").val();
+        var data   = {"name": name, "value": v, "mem_id": mem_id};
+//            console.log(data);
+//            return;
+        var url = "{:U('Sdk/Member/respective_edit_post')}";
+        $.post(url, data, function (res) {
+            if (res.error === '0') {
+                yxalert(res.msg);
+                reload_delay();
+            } else if (res.error === '1') {
+                yxalert(res.msg);
+            }
+        });
+    });
+</script >
+</body >
+</html>

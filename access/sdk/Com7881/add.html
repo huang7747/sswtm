@@ -1,0 +1,140 @@
+<admintpl file="header" />
+<style >
+    .fieled_info {
+        color: red;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+</style >
+<script language="JavaScript" type="text/javascript" >
+    function clearNoNum(obj) {
+        if (obj.value.indexOf(".") == 0) {
+            //首位为小数点，自动补齐0
+            obj.value = "0" + obj.value;
+        }
+        obj.value = obj.value.replace(/[^\d.]/g, ""); // 清除“数字”和“.”以外的字符
+        obj.value = obj.value.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的
+        obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+        obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d\d).*$/, "$1$2.$3");//只能输入两个小数
+        if (obj.value.indexOf(".") < 0 && obj.value != "") {
+            //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+            obj.value = parseFloat(obj.value);
+        }
+    }
+</script >
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap jj" >
+    <ul class="nav nav-tabs" >
+        <li ><a href="{:U('Com7881/index')}" >商品列表</a ></li >
+        <li class="active" ><a href="#" target="_self" >添加商品</a ></li >
+    </ul >
+    <div class="common-form" >
+        <form method="post" class="form-horizontal js-ajax-form"
+              action="{:U('Com7881/add_post')}" >
+            <fieldset >
+                <div class="control-group" >
+                    <label class="control-label" >游戏:</label >
+                    <div class="controls" >
+                        <select class="select_2" name="app_id" id="selected_id" >
+                            <foreach name="games" key="k" item="vo" >
+                                <option value="{$k}" >{$vo}</option >
+                            </foreach >
+                        </select >
+                    </div >
+                </div >
+                <php >$types = array('0'=>'选择类型','1'=>'首充号','2'=>'首充号续充');</php >
+                <div class="control-group" >
+                    <label class="control-label" >类型:</label >
+                    <div class="controls" >
+                        <select class="select_2" name="type_id" id="selected_id" >
+                            <foreach name="types" key="k" item="vo" >
+                                <php >$ps_select=$k==$formget['type_id'] ?"selected":"";</php >
+                                <option value="{$k}" {$ps_select} >{$vo}</option >
+                            </foreach >
+                        </select >
+                    </div >
+                </div >
+
+                <div class="control-group" >
+                    <label class="control-label" >7881商品ID:</label >
+                    <div class="controls" >
+                        <input type="text" class="input" name="goods_id" value=""
+                               onkeyup="this.value=this.value.replace(/[^\d]/g,'')"
+                               onafterpaste="this.value=this.value.replace(/[^\d]/g,'')"
+                               value="{$goods_id}"
+                               placeholder="请输入7881商品ID"
+                        >
+                        <span class='fieled_info' >例：201507958487 从7881平台获取</span >
+                    </div >
+                </div >
+
+                <div class="control-group" >
+                    <label class="control-label" >商品名称:</label >
+                    <div class="controls" >
+                        <input type="text" class="input" name="goods_name" value="{$goods_name}"
+                               placeholder="从7881平台获取 对应于ID" >
+                        <span class='fieled_info' >例：【炎尚】8元（80钻石）首充号 从7881平台获取 对应于ID</span >
+                    </div >
+                </div >
+
+                <div class="control-group" >
+                    <label class="control-label" >价格:</label >
+                    <div class="controls" >
+                        <input type="text" class="input" name="price"
+                               onkeyup="clearNoNum(this)" onafterpaste="clearNoNum(this)"
+                               value="{$price}"
+                               placeholder="请输入7881标价"
+                        >
+                        <span class='fieled_info' >例：商品标价,小数点后两位 如：8元</span >
+                    </div >
+                </div >
+
+                <div class="control-group" >
+                    <label class="control-label" >折后价格:</label >
+                    <div class="controls" >
+                        <input type="text" class="input" name="real_price"
+                               onkeyup="clearNoNum(this)" onafterpaste="clearNoNum(this)"
+                               value="{$real_price}"
+                               placeholder="请输入7881实际折后价格"
+                        >
+                        <span class='fieled_info' >例：商品折后价,小数点后两位, 如：0.38折后 价格3.04元</span >
+                    </div >
+                </div >
+
+                <div class="control-group" >
+                    <label class="control-label" >{:C('CURRENCY_NAME')}数量:</label >
+                    <div class="controls" >
+                        <input type="text" class="input" name="gm_cnt"
+                               onkeyup="clearNoNum(this)" onafterpaste="clearNoNum(this)"
+                               value="{$real_price}"
+                               placeholder="商品对应{:C('CURRENCY_NAME')}数量"
+                        >
+                        <span class='fieled_info' >例：商品对应{:C('CURRENCY_NAME')}数量, 如：8</span >
+                    </div >
+                </div >
+                <div class="control-group" >
+                    <label class="control-label" >当前状态</label >
+                    <div class="controls" >
+                        <foreach name="goodsstatues" key="k" item="v" >
+                            <php >$gs_select=$k==1 ?"checked":"";</php >
+                            <label class="radio inline" for="active_true" >
+                                <input type="radio" name="status" value="{$k}" {$gs_select} id="status" >{$v}</input>
+                            </label >
+                        </foreach >
+                    </div >
+                </div >
+            </fieldset >
+            <div class="form-actions" >
+                <button type="submit"
+                        class="btn btn-primary btn_submit js-ajax-submit" >添加
+                </button >
+                <a class="btn" href="{:U('Com7881/giftList')}" >返回</a >
+            </div >
+        </form >
+    </div >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+
+</body >
+</html>

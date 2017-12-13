@@ -1,0 +1,74 @@
+<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap js-check-wrap" >
+    <ul class="nav nav-tabs" >
+        <li class="active" ><a href="{:U('Notice/index')}" >消息列表</a ></li >
+        <li ><a href="{:U('Notice/add')}" >添加消息</a ></li >
+    </ul >
+
+    <form class="well form-search" method="post" action="{:U('Notice/index')}" >
+        <div class="search_type cc mb10" >
+            <div class="mb10" >
+					<span class="mr20" >
+						游戏名称： 
+						<input type="text" name="name" style="width: 200px;" value="{$gamename}"
+                               placeholder="请输入游戏名..." >
+						<input type="submit" name="submit" class="btn btn-primary" value="搜索" />
+					</span >
+            </div >
+        </div >
+    </form >
+    <form class="js-ajax-form" action="" method="post" >
+        <table class="table table-hover table-bordered table-list" >
+            <thead >
+            <tr >
+                <th width=50 >消息ID</th >
+                <th width=50 >游戏ID</th >
+                <th width=50 >游戏名称</th >
+                <th width=100 >标题</th >
+                <th width=150 >内容</th >
+                <th width=150 >开始显示时间</th >
+                <th width=150 >创建时间</th >
+                <th width=150 >操作</th >
+            </tr >
+            </thead >
+            <foreach name="nlist" item="vo" >
+                <tr >
+                    <td >{$vo.id}</td >
+                    <td >{$vo.app_id}</td >
+                    <td >
+                        <if condition="empty($vo['app_id'])" >
+                            全局消息
+                            <else />
+                            {$games[$vo['app_id']]}
+                        </if >
+
+                    </td >
+                    <td >{$vo['title']}</td >
+                    <td >{$vo['content']}</td >
+                    <td >{$vo.start_time|date='Y-m-d H:i:s',###}</td >
+                    <td >{$vo.create_time|date='Y-m-d H:i:s',###}</td >
+                    <td >
+                        <a href="{:U('Notice/del',array('id'=>$vo['id']))}" class="js-ajax-delete" >删除
+                        </a >
+                    </td >
+                </tr >
+            </foreach >
+        </table >
+        <div class="pagination" >{$Page}</div >
+
+    </form >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+<script >
+    $(function () {
+
+        $("#navcid_select").change(function () {
+            $("#mainform").submit();
+        });
+
+    });
+</script >
+</body >
+</html>

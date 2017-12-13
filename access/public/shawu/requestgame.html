@@ -1,0 +1,64 @@
+<form class="js-ajax-form" action="" method="post">
+    <table class="table table-hover table-bordered table-list">
+        <thead>
+           <tr>
+               <th width="50">游戏ID</th>
+               <th width="150">游戏名称</th>
+               <th width="50">合作公司</th>
+               <th width="50">状态</th>
+               <th width="100">上线时间</th>
+               <th width="150">回调地址</th>
+               <th width="150">母包地址</th>
+               <th width="120">管理操作</th>
+           </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>120227</td>
+                <td>九剑魔龙传</td>
+                <td></td>
+                <td>游戏接入中</td>
+                <td>
+                    <a href="/admin.php/Sdk/Game/set_status/id/120227/status/2.html" class="js-ajax-dialog-btn" data-msg="确定上线游戏？">上线游戏</a>
+                </td>
+                <td style="word-wrap:break-word;word-break:break-all;">
+                    http://api.fb.miqiwan.com/sdk.php?ac=paynotify&amp;yyjia_gid=132&amp;yyjia_cid=24
+                    <br>
+                    <a href="/admin.php/Sdk/Game/editurl/appid/120227.html">点击修改回调</a>
+                </td>
+                <td style="word-wrap:break-word;word-break:break-all; ">
+                    暂无母包(jjmlcand_120227)
+                    <br>
+                    <a href="#addpackageurl">生成母包</a>
+                </td>
+                <td>
+                    <a href="/admin.php/Sdk/Game/get_param/appid/120227.html">对接参数 </a> <!--|
+                        <a href="/admin.php/Game/GamePayway/edit/appid/120227.html" >支付配置 </a >-->
+                    |
+                    <a href="javascript:void(0)" onclick="gourl('#/edit')">编辑 </a>
+                    |
+                    <a href="javascript:void(0)" onclick="gourl('#/del')" class="js-ajax-delete"> 删除</a>
+                </td>
+            </tr>
+           </tbody>
+    </table>
+    <div class="pagination">
+    <span class="current">1</span>
+    <a href="/admin.php/Sdk/Game/index/menuid/9/p/2.html"> 2</a>
+    <a href="/admin.php/Sdk/Game/index/menuid/9/p/3.html"> 3</a>
+    <a href="/admin.php/Sdk/Game/index/menuid/9/p/4.html"> 4</a>
+    <a href="/admin.php/Sdk/Game/index/menuid/9/p/5.html"> 5</a>
+    <a href="/admin.php/Sdk/Game/index/menuid/9/p/6.html"> 6</a>
+    <a href="/admin.php/Sdk/Game/index/menuid/9/p/2.html">下一页</a>
+    <a href="/admin.php/Sdk/Game/index/menuid/9/p/6.html">尾页</a>
+</div>
+</form>
+<script>
+    $('.pagination').find('span,a').each(function(){
+      $(this).css({'padding':'4px 12px','border':'1px solid #ddd'})
+    });
+    $('.pagination').children().click(function(){
+        $('.current').removeClass('current');
+        $(this).addClass('current');
+    })
+</script>

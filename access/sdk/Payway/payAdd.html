@@ -1,0 +1,124 @@
+<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap jj" >
+    <div class="common-form" >
+        <form enctype="multipart/form-data" class="form-horizontal js-ajax-form" action="{:U('Payway/payadd_post')}"
+              novalidate >
+            <switch name="typeid" >
+                <case value="2" >
+                    <fieldset >
+                        <div class="control-group" >
+                            <label class="control-label" >卖家支付宝帐户:</label >
+                            <div class="controls" >
+                                <input type="text" class="input" name="email" value="" >
+                            </div >
+                        </div >
+                        <div class="control-group" >
+                            <label class="control-label" >合作身份者id:</label >
+                            <div class="controls" >
+                                <input type="text" class="input" name="partner" value="" >
+                            </div >
+                        </div >
+                        <div class="control-group" >
+                            <label class="control-label" >安全校验码:</label >
+                            <div class="controls" >
+                                <input type="text" class="input" name="alikey" value="" >
+                            </div >
+                        </div >
+                        <div class="control-group" >
+                            <label class="control-label" >商户私钥:</label >
+                            <div class="controls" >
+                                <textarea name="rsa_private_key" rows="12" cols="75"
+                                          style="resize:none;width:50%;" ></textarea >
+                            </div >
+                        </div >
+                        <div class="control-group" >
+                            <label class="control-label" >商户公钥:</label >
+                            <div class="controls" >
+                                <textarea name="rsa_public_key" rows="12" cols="75"
+                                          style="resize:none;width:50%;" ></textarea >
+                            </div >
+                        </div >
+                        <div class="control-group" >
+                            <label class="control-label" >支付宝公钥:</label >
+                            <div class="controls" >
+                                <textarea name="alipay_public_key" rows="12" cols="75"
+                                          style="resize:none;width:50%;" ></textarea >
+                            </div >
+                        </div >
+                    </fieldset >
+                </case >
+                <case value="6" >
+                    <fieldset >
+                        <div class="control-group" >
+                            <label class="control-label" >商户编号:</label >
+                            <div class="controls" >
+                                <input type="text" class="input" name="merchantaccount" value="" >
+                            </div >
+                        </div >
+                        <div class="control-group" >
+                            <label class="control-label" >商户私钥:</label >
+                            <div class="controls" >
+                                <textarea name="merchantprivatekey" rows="12" cols="75"
+                                          style="resize:none;width:50%;" ></textarea >
+                            </div >
+                        </div >
+                        <div class="control-group" >
+                            <label class="control-label" >商户公钥:</label >
+                            <div class="controls" >
+                                <textarea name="merchantpublickey" rows="12" cols="75"
+                                          style="resize:none;width:50%;" ></textarea >
+                            </div >
+                        </div >
+                        <div class="control-group" >
+                            <label class="control-label" >易宝公钥:</label >
+                            <div class="controls" >
+                                <textarea name="yeepaypublickey" rows="12" cols="75"
+                                          style="resize:none;width:50%;" ></textarea >
+                            </div >
+                        </div >
+                    </fieldset >
+
+                </case >
+                <case value="7" >
+                    <fieldset >
+                        <div class="control-group" >
+                            <label class="control-label" >商户编号:</label >
+                            <div class="controls" >
+                                <input type="text" class="input" name="merchant_id" value="" >
+                            </div >
+                        </div >
+                        <div class="control-group" >
+                            <label class="control-label" >商户RSA私钥:</label >
+                            <div class="controls" >
+                                <textarea name="ecorsa_private_key" rows="12" cols="75"
+                                          style="resize:none;width:50%;" ></textarea >
+                            </div >
+                        </div >
+                        <div class="control-group" >
+                            <label class="control-label" >订单RSA公钥:</label >
+                            <div class="controls" >
+                                <textarea name="ecorsa_public_key" rows="12" cols="75"
+                                          style="resize:none;width:50%;" ></textarea >
+                            </div >
+                        </div >
+                    </fieldset >
+
+                </case >
+                <default />
+            </switch >
+
+            <div class="form-actions" >
+                <input type="hidden" name="typeid" value="{$typeid}" />
+                <button type="submit" class="btn btn-primary btn_submit js-ajax-submit" >添加</button >
+                <a class="btn" href="__URL__" >返回</a >
+            </div >
+        </form >
+
+    </div >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+
+</body >
+</html>

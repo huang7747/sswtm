@@ -1,0 +1,145 @@
+<div id="myusermoinfo" class="tab-pane active" title="修改信息" shorttitle="myusermoinfo" ng-controller="editinfo">
+    <div class="col-xs-12">
+    <form id="myinfo-form"  class="form-horizontal"  novalidate="novalidate">
+        <div class="form-group">
+            <label for="form-field-1" class="col-sm-3 control-label no-padding-right">登录账号：</label>
+            <div class="col-sm-9">
+                <input type="text" name="user_login" value="{{editinfo.user_login}}" class="col-xs-10 col-sm-5" readonly="true">
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="form-group">
+            <label for="form-field-2" class="col-sm-3 control-label no-padding-right">原密码：</label>
+
+            <div class="col-sm-9">
+                <input type="password" name="oldpassword" class="col-xs-10 col-sm-5" placeholder="原密码" id="oldpassword" autocomplete="off">
+                <span class="help-inline col-xs-12 col-sm-7">
+                    <span class="middle">6-20位</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="form-group">
+            <label for="form-field-2" class="col-sm-3 control-label no-padding-right">真实姓名：</label>
+
+            <div class="col-sm-9">
+                <input type="text" name="realName" class="col-xs-10 col-sm-5" placeholder="真实姓名" id="form-field-2" value="{{editinfo.user_nicename}}">
+            </div>
+        </div>
+        <div class="space-4"></div>
+        <script>
+            function uploadImg(){
+                if(typeof FileReader==='undefined'){
+                    this.setAttribute('disabled','disabled');
+                    alert("你的浏览器不支持 FileReader，请使用支持html5的浏览器");
+                    return false;
+                }
+                var file = this.files[0];
+                if(!/image\/\w+/.test(file.type)){
+                    alert("文件必须为图片！");
+                    return false;
+                }
+                if( file.size>48*1024 ){
+                    alert("图片不要大于48KB！");
+                    return false;
+                }
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function(e){
+                    $("#imgShow").children("img").attr("src",this.result);
+                };
+                return false;
+            }
+        </script>
+        <div class="form-group">
+            <label for="imgFileName" class="col-sm-3 control-label no-padding-right">头像：</label>
+            <div class="col-sm-4">
+                <div id="imgShow" class="clearfix" style="margin-bottom:10px;">
+                    <img ng-src="{{editinfo.avatar || '/img/header.png'}}" style="max-height:100px;max-width:200px;background:#eee;border:1px solid #f59942;" title="用户头像" alt="用户头像" class="photo">
+                    <label class="btn btn-app btn-danger btn-xs" style="position:relative;overflow:hidden;width:40px;" data-content="用户头像" data-placement="right" data-trigger="hover" data-rel="popover" title="上传" data-original-title="上传">
+                        <i class="icon-cloud-upload bigger-170"></i>
+                        <input type="file" multiple="" value="" style="position:absolute;top:-9999px;" onchange="return uploadImg.call(this)">
+                    </label>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="form-group">
+            <label for="form-field-3" class="col-sm-3 control-label no-padding-right">手机号码：</label>
+
+            <div class="col-sm-9">
+                <input type="text" name="mobile" value="{{editinfo.user_tel}}" class="col-xs-10 col-sm-5" placeholder="手机号码" id="form-field-3">
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="form-group">
+            <label for="form-field-4" class="col-sm-3 control-label no-padding-right">电子邮箱：</label>
+
+            <div class="col-sm-9">
+                <input type="text" value="{{editinfo.user_email}}" name="email" class="col-xs-10 col-sm-5" placeholder="电子邮箱" id="form-field-4">
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="clearfix form-actions">
+            <div class="col-md-offset-3 col-md-9">
+                <button type="submit" class="btn btn-info">
+                    <i class="icon-ok bigger-110"></i>
+                    提交
+                </button>
+                <button type="reset" class="btn">
+                    <i class="icon-undo bigger-110"></i>
+                    重置
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+<script>
+    $("button[type='submit']").click(function(){
+        event.preventDefault();
+        var file      =$("[type='file']")[0].files[0];
+        var filename  =file?file[name] : $('.photo').attr('src');
+        var realname  =$("[name='realName']").val();
+        var user_login=$("[name='user_login']").val();
+        var mobile    =$("[name='mobile']").val();
+        var email     =$("[name='email']").val();
+        var opwd      =$("[name='oldpassword']").val();
+        var formdata  =new FormData();
+            formdata.append("user_login",user_login);
+            formdata.append("user_pass",opwd);
+            formdata.append("avatar",filename);
+            formdata.append("user_nicename",realname);
+            file?formdata.append("upload-file",file):'';
+            formdata.append("user_email",email);
+            formdata.append("user_tel",mobile);
+        $.ajax({
+            url: '/index.php/index/user/setpuserinfo',
+            type: 'POST',
+            cache: false,
+            data: formdata,
+            processData: false,
+            contentType: false,
+            async: false,
+            success:function(res) {
+                if (res.status == 1) {
+                    lsalert(res.messages,true,1);
+                }else {
+                    lsalert(res.messages,'',2);
+                }
+            }
+        });
+    })
+</script>

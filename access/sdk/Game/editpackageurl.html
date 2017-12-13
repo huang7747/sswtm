@@ -1,0 +1,40 @@
+<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap js-check-wrap" >
+    <ul class="nav nav-tabs" >
+        <li ><a href="{:U('Game/index')}" >游戏列表</a ></li >
+        <li class="active" ><a href="#" >编辑回调</a ></li >
+    </ul >
+    <div class="common-form" >
+        <form method="post" class="form-horizontal js-ajax-form" action="{:U('Game/editpackageurl_post')}" >
+            <fieldset >
+                <div class="control-group" >
+                    <label class="control-label" >游戏ID:</label >
+                    <div class="controls" >
+                        <label class="control-label" style="text-align:left" >{$games.app_id}</label >
+                    </div >
+                </div >
+
+                <input id="id" name="id" type="hidden" value="{$games.id}" >
+                <input id="appid" name="appid" type="hidden" value="{$games.app_id}" >
+
+                <div class="control-group" >
+                    <label class="control-label" >母包地址:</label >
+                    <div class="controls" >
+                        <textarea name="packageurl" rows="3" cols="60" style="resize:none;width:40%;"
+                                  placeholder="请输入母包地址" >{$games.packageurl}</textarea >
+                    </div >
+                </div >
+            </fieldset >
+            <div class="form-actions" >
+                <button type="submit" class="btn btn-primary btn_submit js-ajax-submit" >更新</button >
+                <a class="btn" href="__URL__" >返回</a >
+            </div >
+        </form >
+    </div >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+
+</body >
+</html>

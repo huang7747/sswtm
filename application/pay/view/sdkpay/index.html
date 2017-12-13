@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html >
+<style >
+    html {
+        display: none;
+    }
+</style >
+<script >
+    if (self == top) {
+        document.documentElement.style.display = 'block';
+    } else {
+        top.location = self.location;
+    }
+</script >
+<head lang="en" >
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta charset="UTF-8" >
+    <title >{$title}</title >
+    <link rel="stylesheet" href="/public/mobile/css/payment.css" />
+</head >
+<body >
+<!-- <header>
+    <div class="return_btn" onclick="window.history.back()">
+        <img src="/api/static/mobile/images/btn_return_l.png" alt=""/>
+    </div>
+    <h3></h3>
+    <div class="close_btn">
+        <img src="/api/static/mobile/images/btn_cancle.png" alt=""/>
+    </div>
+</header> -->
+<!--帐号信息-->
+<div class="account_information" >
+    <p class="account" >帐号：<i >{$Think.session.user.username}</i ></p >
+    <p class="balance" >{:config('config.CURRENCY_NAME')}余额：<span >{$Think.session.user.gmremain}</span >元</p >
+</div >
+<!--购买信息-->
+<div class="buy_information" >
+    <h3 class="info gray_title" >购买信息：</h3 >
+    <p class="prop" >购买道具：<span >{$Think.session.order.product_name}</span ></p >
+    <p class="prop_price" >道具价格：<span >{$Think.session.order.product_price}</span >元</p >
+    <p class="payed" >{:config('config.CURRENCY_NAME')}支付：<span >{$Think.session.order.gm_cnt}</span >元</p >
+    {egt name="Think.session.order.real_amount" value="0.01"}
+    <p class="canPay" >还需支付：<span >{$Think.session.order.real_amount}</span >元
+                       {switch name="Think.session.order.benefit_type" }
+                       {case value="1"}
+                       {neq name="Think.session.order.mem_rate" value="1"}
+                       (<i >{$Think.session.order.mem_rate*10}</i >折)
+                       {/neq}
+                       {/case}
+                       {case value="2"}
+    <p class="rebate" >返利：<span >{$Think.session.order.rebate_cnt}</span >元</p >{/case}
+    {default /}
+    {/switch}
+    </p>
+
+</div >
+
+<!--选择支付方式-->
+<div class="change_way" >
+    <h3 class="gray_title" >选择支付方式：</h3 >
+    <ul class="way" >
+        <li data-way="alipay" >
+            <div class="way_icon" ><img src="/public/mobile/images/alipay.png" alt="" /></div >
+            <span >支付宝(推荐)</span >
+            <div class="right_icon" ></div >
+        </li >
+        <!--<li data-way="wxpay" >-->
+            <!--<div class="way_icon" ><img src="/public/mobile/images/wxpay.png" alt="" /></div >-->
+            <!--<span >微信支付</span >-->
+            <!--<div class="right_icon" ></div >-->
+        <!--</li >-->
+        <li data-way="spay" >
+            <div class="way_icon" ><img src="/public/mobile/images/wxpay.png" alt="" /></div >
+            <span >微信支付</span >
+            <div class="right_icon" ></div >
+        </li >
+        <!--<li data-way="zwxpay" >
+            <div class="way_icon" ><img src="/public/mobile/images/wxpay.png" alt="" /></div >
+            <span >微信支付</span >
+            <div class="right_icon" ></div >
+        </li >
+        <li data-way="unionpay" >
+            <div class="way_icon" ><img src="/public/mobile/images/unionpay.png" alt="" /></div >
+            <span >银联在线支付</span >
+            <div class="right_icon" ></div >
+        </li >
+        <li data-way="now" >
+            <div class="way_icon" ><img src="/public/mobile/images/wxpay.png" alt="" /></div >
+            <span >微信支付</span >
+            <div class="right_icon" ></div >
+        </li >
+
+        <li data-way="payeco"><div class="way_icon"><img src="/public/mobile/images/unionpay.png" alt=""/></div><span>银联在线支付</span><div class="right_icon"></div></li>-->
+    </ul >
+    <input type="hidden" id="gamepay" name="gamepay" value='' />
+</div >
+{else /}
+<input type="hidden" id="gamepay" name="gamepay" value='gamepay' />
+</div>
+{/egt}
+<!--客服QQ-->
+<footer class="footer" >
+    <a href="#" class="pay" >立即支付</a >
+    <p >
+        {notempty name="contactdata['qq']"}
+        <span >客服QQ：<a onclick="sswsdk_openqq('{$contactdata['qq']}');" >{$contactdata['qq']}</a ></span >
+        {/notempty}
+        {notempty name = "contactdata['qqgroup']"}
+        <span >Q Q 群：<a href="#"
+                        onclick="sswsdk_openqqgroup('{$contactdata['qqgroup']}','{$contactdata['qqgroupkey']}');" >{$contactdata['qqgroup']}</a ></span >
+        {/notempty}
+    </p >
+</footer >
+<!--支付操作-->
+<form action="preorder" method="post" id="payform" style="display:none" >
+    <input type="hidden" value="{$Think.session.order.order_id}" id="orderid" name="orderid" />
+    <input type="hidden" id="paytype" name="paytype" />
+    <input type="hidden" id="paytoken" name="paytoken" value="{$Think.session.order.paytoken}" />
+</form >
+</body >
+<script src="/public/mobile/js/payment.js" ></script >
+<script src="/public/mobile/js/fastclick.js" ></script >
+<script >
+    window.addEventListener("load", function () {
+        FastClick.attach(document.body);
+    }, false);
+</script >
+</html >

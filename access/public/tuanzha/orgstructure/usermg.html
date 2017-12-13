@@ -1,0 +1,313 @@
+<div id="vplanvipGradeAdmin" class="tab-pane active" title="用戶管理(默认)" shorttitle="vplanvipGradeAdmin" ng-controller="usermg">
+    <form action="" >
+        <input type="hidden" name="numPerPage" value="10">
+        <input type="hidden" name="currentpage" value="1">
+
+        <div class="ui-jqgrid-view ui-jqgrid">
+            <div class="ui-jqgrid-titlebar ui-widget-header ui-corner-top ui-helper-clearfix">
+                <a style="right: 0px;" class="ui-jqgrid-titlebar-close HeaderButton" role="link" href="javascript:void(0)">
+                    <span class="ui-icon ui-icon-circle-triangle-n"></span>
+                </a>
+                <span class="ui-jqgrid-title">用户列表</span>
+            </div>
+            <div class="btn  btn-info btn-sm" style="margin:8px 0;font-family:'微軟雅黑'" id="add-user">添加用戶</div>
+            <div class="table-responsive">
+                <table id="sample-table-1" class="table table-striped table-bordered table-hover" style="margin-bottom:0;">
+                    <thead>
+                    <tr>
+                        <th class="center">
+                            <label>
+                                <input type="checkbox" class="ace" onclick="autocheckbox(this);">
+                                <span class="lbl"></span>
+                            </label>
+                        </th>
+                        <th>用户ID</th>
+                        <th>登入账号</th>
+                        <th>用户姓名</th>
+                        <th>职务</th>
+                        <th>放端组</th>
+                        <th>小组</th>
+                        <th>vip等级</th>
+                        <th>管理员权限</th>
+                        <th>禁用状态</th>
+                        <th>操作时间</th>
+                        <th>操作人</th>
+                        <th width="100">操作</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="user in userdata">
+                        <td class="center">
+                            <label>
+                                <input name="ids" class="ace" value="1" type="checkbox">
+                                <span class="lbl"></span>
+                            </label>
+                        </td>
+                        <td>{{user.id}}</td>
+                        <td>{{user.user_login}}</td>
+                        <td>{{user.user_nicename}}</td>
+                        <td>{{user.user_role | role}}</td>
+                        <td>许思明</td>
+                        <td>一组</td>
+                        <td>1</td>
+                        <td>--</td>
+                        <td>
+                            <button class="btn btn-info btn-xs" ng-disabled="user.user_login=='admin'" ng-bind="user.status==1?'已启用':'已禁止'" ng-click="offOn(user.user_login,user.status)"></button>
+                        </td>
+                        <td>{{user.create_time | date}}</td>
+                        <td>--</td>
+                        <td>
+                            <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+                                <!--<button thisid="1" class="btn btn-xs btn-info" onclick="return dialogOnlyView(this,600);" title="查看">
+                                    <i class="icon-zoom-in bigger-120"></i>
+                                </button>-->
+                                <span  class="btn btn-xs btn-info" data-login="{{user.user_login}}" data-nicename="{{user.user_nicename}}" data-email="{{user.user_email}}" data-sex="{{user.sex}}"  data-birthday="{{user.birthday}}" data-role="{{user.user_role}}" onclick="edituser(this)" title="编辑" style="margin-right:4px;">
+                                     <i class="icon-edit bigger-120" class="editbtn" ></i>
+                                </span>
+                                <span  class="btn btn-xs btn-info" >
+                                    <i class="icon-trash bigger-120" class="editbtn"  title="删除"></i>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div><!-- /.table-responsive -->
+            <div id="grid-pager" class="ui-jqgrid-pager ui-corner-bottom" style="height:50px;">
+                <div role="group" class="ui-pager-control" id="pg_grid-pager">
+                    <table cellspacing="0" cellpadding="0" border="0" role="row" style="width:100%;table-layout:fixed;height:100%;" class="ui-pg-table">
+                        <tbody>
+                        <tr>
+                            <td align="left" id="grid-pager_left">
+                                <table cellspacing="0" cellpadding="0" border="0" style="float:left;table-layout:auto;" class="ui-pg-table navtable">
+                                    <tbody>
+                                    <tr>
+                                        <td style="width:4px;" class="ui-pg-button ui-state-disabled">
+                                            <span class="ui-separator"></span>
+                                        </td>
+                                        <td class="ui-pg-button ui-corner-all">
+                                            <div class="ui-pg-div">
+                                                <span class="ui-icon icon-refresh green" onclick="javascript:window.location.reload(true);" title="刷新"></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td align="center" id="grid-pager_center">
+                                <table cellspacing="0" cellpadding="0" border="0" class="ui-pg-table" style="table-layout:auto;">
+                                    <tbody>
+                                    <tr>
+                                        <td class="ui-pg-button ui-corner-all" id="prev_grid-pager">
+                                            <span class="ui-icon icon-angle-left bigger-140" ng-click="gotable('#/orgstrusermg/'+(+id-2))" ng-disabled="id==1"></span>
+                                        </td>
+                                        <td style="width:4px;" class="ui-pg-button ui-state-disabled">
+                                            <span class="ui-separator"></span>
+                                        </td>
+                                        <td dir="ltr" style="min-width:150px">
+                                            当前页数
+                                            <input type="text" id="currentpage" name="currentpage" value={{id}} ng-click="gotable('#/orgstrusermg/'+(+id-1))" maxlength="7" size="2" class="ui-pg-input">
+                                            总页数
+                                            <span thisparam="nums">{{list.length}}</span>
+                                        </td>
+
+                                        <td style="width:4px;" class="ui-pg-button ui-state-disabled" style="min-width:20px">
+                                            <span class="ui-separator"></span>
+                                        </td>
+                                        <td class="ui-pg-button ui-corner-all " id="next_grid-pager" style="min-width:130px" >
+                                            <button class="ui-icon icon-angle-right bigger-140" ng-click="gotable('#/orgstrusermg/'+id)" ng-disabled="id==list.length"></button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td align="right" id="grid-pager_right" style="min-width:100px">
+                                <div class="ui-paging-info" style="text-align:right" dir="ltr">
+                                    当前数据
+                                    {{currentnum}}
+                                    -
+                                    {{totalnum}}
+                                    ，
+                                    总共<span thisparam="totalnums">{{total}}</span>&nbsp;条
+
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><!-- /span -->
+    </form>
+</div >
+<div class="pop_up_form_div container" id='add_game' style="display:none;" ng-controller="addadmin">
+    <form  name="adduser" novalidate ng-submit="addadmin()">
+        <div class="row" >
+            <div class="col-md-4" >用户名</div ><br/>
+            <div class="col-md-8" >
+                <input type="text" name="user_login"  ng-model="user.login" required/>
+                <span ng-show="adduser.user_login.$error.required" style="color:red">*请输入用户名</span>
+            </div >
+        </div >
+        <div class="row" >
+            <div class="col-md-4" >密码</div ><br/>
+            <div class="col-md-8" >
+                <input type="password" name="user_pass"  ng-model="user.pass" required ng-minlength="6"/>
+                <span ng-show="adduser.user_pass.$error.required" style="color:red">*请输入密码</span>
+                <span ng-show="adduser.user_pass.$dirty && adduser.user_pass.$error.minlength" style="color:red">*密码长度小于6位</span>
+            </div >
+        </div >
+        <div class="row" >
+            <div class="col-md-4" >姓名</div ><br/>
+            <div class="col-md-8" >
+                <input type="text" name="user_nicename"  ng-model="user.name" required/>
+                <span ng-show="adduser.user_nicename.$error.required" style="color:red">*请输入姓名</span>
+            </div >
+        </div >
+        <div class="row" >
+            <div class="col-md-4" >邮箱</div ><br/>
+            <div class="col-md-8" >
+                <input type="email" name="user_email" ng-model="user.email" ng-pattern="/w{3}\.[\d]{5,8}@[\w]{2,3}\.[\w]+/"/><br/>
+                <span ng-show="adduser.user_email.$error.pattern" style="color:red">*请输入正确邮箱</span>
+            </div >
+        </div >
+        <div class="row" >
+            <div class="col-md-4" >生日</div ><br/>
+            <div class="col-md-8" >
+                <input type="date" name="birthday" ng-model="user.birth"/>
+            </div >
+        </div >
+        <div class="row" >
+            <div class="col-md-4" >性别</div ><br/>
+            <div class="col-md-8" >
+                <select name="sex" ng-model="user.sex">
+                    <option value="0" ng-selected="true">保密</option>
+                    <option value="1">男</option>
+                    <option value="2">女</option>
+                </select>
+            </div >
+        </div >
+        <div class="row" >
+            <div class="col-md-4" >角色</div ><br/>
+            <div class="col-md-8">
+                <select name="user_role" ng-model="user.role">
+                    <option value="0">商务</option>
+                    <option value="1">团长</option>
+                    <option value="2" ng-selected="true">推广员</option>
+                </select>
+            </div >
+        </div >
+        <div class="row" style="margin-top:20px;" >
+            <!--<button class="btn btn-success pop_up_form_submit_btn" id='agent_submit_btn' >确认</button >-->
+            <button class="btn btn-success pop_up_form_submit_btn"  ng-disabled="adduser.$invalid">确认</button >
+        </div >
+    </form>
+</div>
+<div class="pop_up_form_div container" id='edit_user' style="display:none;" >
+    <form action="" id="editform">
+        <input type="hidden" name="user_login">
+        <div class="row" >
+            <div class="col-md-4" >姓名</div ><br/>
+            <div class="col-md-8" >
+                <input type="text" name="user_nicename"  placeholder="请输入姓名" />
+            </div >
+        </div >
+        <div class="row" >
+            <div class="col-md-4" >邮箱</div ><br/>
+            <div class="col-md-8" >
+                <input type="email" name="user_email" />
+            </div >
+        </div >
+        <div class="row" >
+            <div class="col-md-4" >性别</div ><br/>
+            <div class="col-md-8" >
+                <select name="sex">
+                    <option value="0" selected>保密</option>
+                    <option value="1">男</option>
+                    <option value="2">女</option>
+                </select>
+            </div >
+        </div >
+        <div class="row" >
+            <div class="col-md-4" >生日</div ><br/>
+            <div class="col-md-8" >
+                <input type="date" name="birthday" />
+            </div >
+        </div >
+        <div class="row" >
+            <div class="col-md-4" >角色</div ><br/>
+            <div class="col-md-8" >
+                <select name="user_role">
+                    <option value="1">团长</option>
+                    <option value="2" selected>推广员</option>
+                </select>
+            </div >
+        </div >
+        <div class="row" style="margin-top:20px;" >
+            <button class="btn btn-success pop_up_form_submit_btn" id='edit_submit_btn' >确认</button >
+        </div >
+    </form>
+</div>
+<div class="pop_up_form_div container" id='add_file' style="display:none;" >
+    <div >
+        <div class="row" >
+            <div class="col-md-4" >上传头像</div ><br/>
+            <div class="col-md-8" >
+                <input type="file" name="up-file" id="file"/>
+            </div >
+        </div >
+        <div class="row" style="margin-top:20px;" >
+            <span class="btn btn-success pop_up_form_submit_btn" id='submint_up' >确认</span >
+        </div >
+    </div>
+</div>
+<script>
+    $('#add-user').click(function(){
+        lsopen('添加用户','400px','580px','add_game')
+    });
+//    $("#agent_submit_btn").click(function(event){
+//        event.preventDefault();
+//        var url = '/index.php/index/user/adduser';
+//        var data = $('#addform').serialize();
+//        commonAjax(url,data,3);
+//    });
+    $("#submint_up").click(function () {
+        var url      = "/index.php/index/user/upload";
+        var formdata =new FormData();
+        var upimage  =$("#submint_up").attr('data-name');
+        formdata.append("user_login",upimage);
+        formdata.append("upload-file",$('#file')[0].files[0]);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            cache: false,
+            data: formdata,
+            processData: false,
+            contentType: false,
+            async: false,
+            success:function(res) {
+                if (res.status == 1) {
+                    lsalert('上传成功!',true,1);
+                }else {
+                    lsalert('上传失败!','',2)
+                }
+            }
+        });
+    });
+    function edituser(that){
+        lsopen('编辑用户','400px','500px','edit_user');
+        $("[name='user_login']")   .val( $(that).attr('data-login'));
+        $("[name='user_nicename']").val( $.trim($(that).attr('data-nicename')));
+        $("[name='user_email']")   .val( $(that).attr('data-email'));
+        $("[name='sex']")          .val( $(that).attr('data-sex'));
+        $("[name='birthday']")     .val( $(that).attr('data-birthday'));
+        $("[name='user_role']")    .val( $(that).attr('data-role'));
+    }
+    $('#edit_submit_btn').click(function(event){
+        event.preventDefault();
+        var url ='/index.php/index/user/edtuser';
+        var data=$('#editform').serialize();
+        commonAjax(url,data,1);
+    })
+</script>

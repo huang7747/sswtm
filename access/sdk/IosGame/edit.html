@@ -1,0 +1,146 @@
+<admintpl file="header" />
+<!-- 公用样式 -->
+
+<link href="__PUBLIC__/bootstrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<script src="__PUBLIC__/bootstrap-fileinput/js/fileinput.js" type="text/javascript" ></script >
+<script src="__PUBLIC__/bootstrap-fileinput/js/fileinput_locale_zh.js" type="text/javascript" ></script >
+<script src="__PUBLIC__/bootstrap-fileinput/js/fileinput_locale_es.js" type="text/javascript" ></script >
+
+</head>
+<body >
+<div class="wrap js-check-wrap" >
+    <ul class="nav nav-tabs" >
+        <li ><a href="{:U('Sdk/IosGame/index')}" >游戏列表</a ></li >
+        <li class="active" ><a href="#" >编辑游戏</a ></li >
+    </ul >
+
+    <div class="wrap jj" >
+        <div class="common-form" >
+            <div id="kv-avatar-errors" class="center-block" style="width:800px;display:none" ></div >
+            <form enctype="multipart/form-data" class="form-horizontal js-ajax-form"
+                  action="{:U('Sdk/IosGame/edit_post')}" method="post" >
+                <fieldset >
+                    <input type='hidden' name='appid' value='{$gdata.id}' >
+                    <div class="control-group" >
+                        <label class="control-label" >游戏名称:</label >
+                        <div class="controls" >
+                            <!--<input type="text" class="input" name="gamename" value="{$gdata['name']}" placeholder="请输入游戏名称">-->
+                            {$gdata['name']}
+                        </div >
+                    </div >
+
+                    <!--					<div class="control-group">
+                                            <label class="control-label">CP分成比例</label>
+                                            <div class="controls">
+                                                <input type="text"  class="input" value="{$gdata.game_rate}" name="game_rate">
+                                                * 比例50% 填写0.5
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">渠道默认折扣:</label>
+                                            <div class="controls">
+                                                <input type="text" class="input" value="{$gdata.agent_rate}" name="agent_rate">
+                                                                            * 比例50% 填写0.5 <span style="color:grey;">这里的设置只会影响后续申请游戏的折扣</span>
+                                            </div>
+                                        </div>
+
+                                                            <div class="control-group">
+                                            <label class="control-label">默认自然流水返点:</label>
+                                            <div class="controls">
+                                                <input type="text" class="input" value="{$gdata.rebate}" name="agent_rebate">
+                                                * 比例50% 填写0.5
+                                            </div>
+                                        </div>-->
+
+                    <div class="control-group" style="height:60px;" >
+                        <label class="control-label" style="margin-top:20px;" >游戏图标:</label >
+                        <div class="controls" >
+                            <input type="file" class="input" name="icon" style="margin:5px 5px 0 0;width:200px;" />
+                            当前图标：
+                            <empty name="gdata.icon" >
+                                <span style="color:#CCCCCC;" >无</span >
+                            </empty >
+                            <notempty name="gdata.icon" >
+                                <img src="{$gdata.icon}" width="80" />
+                            </notempty >
+                        </div >
+                    </div >
+
+                    <div class="control-group" >
+                        <label class="control-label" >当前状态</label >
+                        <div class="controls" >
+                            <foreach name="gamestatues" key="k" item="v" >
+                                <php >$gs_select=$k==$gdata[status] ?"checked":"";</php >
+                                <label class="radio inline" for="active_true" >
+                                    <if condition="$gs_select eq 'checked'" >
+                                        <input type="radio" name="gstatus" value="{$k}" {$gs_select}
+                                               id="gstatus" >{$v}</input>
+                                    </if >
+                                </label >
+                            </foreach >
+                        </div >
+                    </div >
+                </fieldset >
+                <div class="form-actions" >
+                    <button type="submit"
+                            class="btn btn-primary btn_submit js-ajax-submit" >修改
+                    </button >
+                    <a class="btn" href="{:U('Sdk/IosGame/index')}" >返回</a >
+                </div >
+            </form >
+        </div >
+    </div >
+    <script src="__PUBLIC__/js/common.js" ></script >
+
+    <script >
+        $(function () {
+            $("#version").bind("blur", function () {
+                var version = $("#version").val();
+                var reg     = /([0-9]{1}.){1,}[0-9]{1}$/;
+
+                if (version != null) {
+                    if (! reg.test(version)) {
+                        $("#cmsg").html("格式不正确,数字小数点组合");
+                    } else {
+                        $("#cmsg").html("");
+                    }
+                }
+
+            });
+        });
+
+        var btnCust = '';
+        $("#avatar").fileinput({
+            overwriteInitial     : true,
+            maxFileSize          : 1500,
+            showClose            : false,
+            showCaption          : false,
+            browseLabel          : '',
+            removeLabel          : '',
+            browseIcon           : '<i class="fa fa-folder-open-o"></i>添加',
+            removeIcon           : '<i class="fa fa-trash-o"></i>清除',
+            removeTitle          : 'Cancel or reset changes',
+            elErrorContainer     : '#kv-avatar-errors',
+            msgErrorClass        : 'alert alert-block alert-danger',
+            defaultPreviewContent: '<img src="__PUBLIC__/bootstrap-fileinput/img/add_img.png" alt="Your Avatar" style="width:160px">',
+            layoutTemplates      : {main2: '{preview} ' + btnCust + ' {remove} {browse}'},
+            allowedFileExtensions: ["jpg", "png"]
+        });
+
+        $("#input-pt-br").fileinput({
+            language             : "zh",
+            uploadUrl            : "",
+            maxFileCount         : 5,
+            showUpload           : false,
+            showCancel           : false,
+            showCaption          : false,
+            overwriteInitial     : false,
+            dropZoneEnabled      : false,
+            allowedFileExtensions: ["jpg", "jpeg", "png", "gif"]
+        });
+    </script >
+
+</body >
+
+</html>

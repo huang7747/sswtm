@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html >
+<head lang="en" >
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta charset="UTF-8" >
+    <title >支付状态</title >
+    <link rel="stylesheet" href="/public/mobile/css/payment.css" />
+</head >
+<br ><br ><br ><br >
+<div class="account_information" >
+    <p class="balance" style="text-align:center" >亲，您已退出支付，请点击关闭按钮关闭！</p >
+</div >
+<!--客服QQ-->
+<footer class="footer" >
+    <a href="#" onclick="sswsdk_backgame('aa')" class="pay" style="width:50px" >关闭</a >
+</footer >
+<script language='javascript' >
+    onload = function () {
+        setTimeout(sswsdk_backgame('aa'), 10);
+    };
+</script >
+</body >
+<script src="/public/mobile/js/payment.js" ></script >
+<script src="/public/mobile/js/fastclick.js" ></script >
+</html >

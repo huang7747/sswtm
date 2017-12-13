@@ -1,0 +1,81 @@
+<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed" >
+<div class="wrap jj" >
+    <ul class="nav nav-tabs" >
+        <li ><a href="{:U('Coupon/index')}" >代金卷列表</a ></li >
+        <li class="active" ><a href="#" target="_self" >添加代金卷</a ></li >
+    </ul >
+    <div class="common-form" >
+        <form method="post" class="form-horizontal js-ajax-form" action="{:U('Coupon/add_post')}" >
+            <fieldset >
+
+                <div class="control-group" >
+                    <label class="control-label" >代金卷标题:</label >
+                    <div class="controls" >
+                        <input type="text" class="input" name="title" value="{$title}" placeholder="请输入代金卷标题" >
+                        <span style="color:red" >例：6元代金卷</span >
+                    </div >
+                </div >
+                 <div class="control-group" >
+                    <label class="control-label" >代金卷金额:</label >
+                    <div class="controls" >
+                        <input type="number" class="input" name="money" value="{$money}" min="0" step="1"
+                               onkeyup="clearNoNum(this,0,0)" onafterpaste="clearNoNum(this,0,0)"
+                               placeholder="请输入所需积分" >
+                        <span style="color:red" >填入该代金卷价值 (1:1 人民币)</span >
+                    </div >
+                 </div >
+                <div class="control-group" >
+                    <label class="control-label" >数量:</label >
+                    <div class="controls" >
+                        <input type="number" class="input" name="total_num" value="{$total_num}" min="0" step="1"
+                               onkeyup="clearNoNum(this,0,0)" onafterpaste="clearNoNum(this,0,0)"
+                               placeholder="请输入所需积分" >
+                        <span style="color:red" >该代金卷最大数量</span >
+                    </div >
+                 </div >
+                <div class="control-group" >
+                    <label class="control-label" >所需积分:</label >
+                    <div class="controls" >
+                        <input type="number" class="input" name="condition" value="{$condition}" min="0" step="1"
+                               onkeyup="clearNoNum(this,0,0)" onafterpaste="clearNoNum(this,0,0)"
+                               placeholder="请输入所需积分" >
+                        <span style="color:red" >填入领取所需积分 0 表示不需要免费代金卷</span >
+                    </div >
+                 </div >
+
+                <div class="control-group" >
+                    <label class="control-label" >使用说明:</label >
+                    <div class="controls" >
+                        <textarea class="form-control comment-postbox" name="content" rows="3" cols="75"
+                                  style="width: 50%;" >{$content}</textarea >
+                        <span style="color:red" >请输入该代金卷说用说明</span >
+                    </div >
+                </div >
+
+                <div class="control-group" >
+                    <label class="control-label" >使用期限:</label >
+                    <div class="controls" >
+                        <input type="text" inline name="starttime" class="js-datetime"
+                               value="{$start_time|date='Y-m-d H:i:s',###}"
+                               style="width: 150px;"
+                               autocomplete="off" >--
+                        <input type="text" inline name="endtime" class="js-datetime"
+                               value="{$end_time|date='Y-m-d H:i:s',###}"
+                               style="width: 150px;"
+                               autocomplete="off" >
+                        <span style="color:red" >请选择该代金卷的使用时间期限，确保此期限内代金卷兑换在有效期内</span >
+                    </div >
+                </div >
+            </fieldset >
+            <div class="form-actions" >
+                <button type="submit" class="btn btn-primary btn_submit js-ajax-submit" >更新</button >
+                <a class="btn" href="{:U('Conpon/index')}" >返回</a >
+            </div >
+        </form >
+    </div >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+</body >
+</html>

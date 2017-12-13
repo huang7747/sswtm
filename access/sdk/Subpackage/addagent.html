@@ -1,0 +1,67 @@
+﻿<admintpl file="header" />
+</head>
+<body >
+<div class="wrap jj" >
+    <ul class="nav nav-tabs" >
+        <li ><a href="{:U('Subpackage/qudaoindex')}" >一键分包</a ></li >
+        <li class="active" ><a href="#" target="_self" >添加渠道</a ></li >
+    </ul >
+    <form method="post" class="form-horizontal js-ajax-form" action="{:U('Subpackage/addagent_post')}" >
+        <fieldset >
+            <div class="control-group" >
+                <label class="control-label" >账号:</label >
+                <div class="controls" >
+                    <input type="text" class="input" name="user_login" placeholder="输入渠道账号" >
+                </div >
+            </div >
+            <div class="control-group" >
+                <label class="control-label" >密码:</label >
+                <div class="controls" >
+                    <input type="text" class="input" name="user_pass" value="" placeholder="输入密码" >
+                </div >
+            </div >
+            <div class="control-group" >
+                <label class="control-label" >渠道名称:</label >
+                <div class="controls" >
+                    <input type="text" class="input" name="user_nicename" placeholder="输入渠道名称" >
+                </div >
+            </div >
+            <div class="control-group" >
+                <label class="control-label" >联系人:</label >
+                <div class="controls" >
+                    <input type="text" class="input" name="linkman" placeholder="输入联系人" >
+                </div >
+            </div >
+            <div class="control-group" >
+                <label class="control-label" >QQ:</label >
+                <div class="controls" >
+                    <input type="text" class="input" name="qq" placeholder="输入QQ" >
+                </div >
+            </div >
+
+            <div class="control-group" >
+                <label class="control-label" >手机:</label >
+                <div class="controls" >
+                    <input type="text" class="input" name="mobile" placeholder="输入手机号码" >
+                </div >
+            </div >
+            <div class="control-group" >
+                <label class="control-label" >角色:</label >
+                <div class="controls" >
+                    <foreach name="roles" key="k" item="vo" >
+                        <label class="checkbox inline" >
+                            <input value="{$k}" type="radio" name="role_id" checked >{$vo}
+                        </label >
+                    </foreach >
+                </div >
+            </div >
+        </fieldset >
+        <div class="form-actions" >
+            <button type="submit" class="btn btn-primary js-ajax-submit" >{:L('ADD')}</button >
+            <a class="btn" href="{:U('Subpackage/qudaoindex')}" >返回</a >
+        </div >
+    </form >
+</div >
+<script src="__PUBLIC__/js/common.js" ></script >
+</body >
+</html>
